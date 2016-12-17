@@ -32,7 +32,7 @@
 				</div>
 				<div class="right">
 					<div id="menu">
-						<a href="#" class="selected">Accueil</a>
+						<a href="index.php" class="selected">Accueil</a>
 						<a href="#">Jeux</a>
 						<a href="#">Tournoi</a>
 						<a href="#">Stream</a>
@@ -45,7 +45,7 @@
 		<div class="page">
 			<div id="header">
 				<div id="logo" class="left">
-					<a href="#">
+					<a href="index.php">
 						<img src="./style/img/logo.png" alt="logo" id="logoImg"/>
 						<span class="logoTtl">Student Gaming</span>
 						<span class="logoStl"><b>League</b> 2017</span>
