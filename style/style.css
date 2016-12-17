@@ -1,0 +1,388 @@
+@import url(https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700,800);
+
+html, body
+{
+	margin: 0px;
+	padding: 0px;
+	min-height: 100%;
+	font-family: "Open Sans";
+	min-width: 920px;
+}
+
+body
+{
+	background-image: url("./img/background.png");
+	background-size: contain;
+	background-repeat: no-repeat;
+	background-color: #111111;
+}
+
+.page
+{
+	width: calc(100% - 40px);
+	max-width: 1200px;
+	margin: auto;
+}
+
+#topmenu
+{
+	background: rgba(25,25,25,0.3);
+	border-bottom: 1px solid rgba(255,255,255,0.05);
+	min-height: 60px;
+	color: #ffc68f;
+}
+
+.left
+{
+	float: left;
+}
+
+.right
+{
+	float: right;
+}
+
+#social
+{
+	display: inline-block;
+	font-size: 20px;
+}
+
+#social .media
+{
+	padding: 12px 10px;
+	display: inline-block;
+}
+
+#social .media a
+{
+	color: inherit;
+}
+
+/* TEMP DISCORD */
+#social .media img
+{
+	position: relative;
+	top: 2px;
+}
+
+#meta
+{
+	display: inline-block;
+	margin-left: 30px;
+}
+
+#meta a
+{
+	color: inherit;
+	text-decoration: none;
+	font-size: 12px;
+	text-transform: uppercase;
+	display: inline-block;
+	padding: 10px 10px;
+}
+
+#meta a i
+{
+	color: #ff6600;
+	padding-right: 3px;
+}
+
+#menu
+{
+	text-transform: uppercase;
+	font-weight: 600;
+}
+
+#menu a
+{
+	margin: 0px 10px;
+	padding: 22px 0px;
+	display: inline-block;
+	font-size: 12px;
+	color: inherit;
+	text-decoration: none;
+}
+
+#menu a.selected
+{
+	color: #ff6600;
+	border-bottom: 2px solid #ff6600;
+	padding-bottom: 19px
+}
+
+@media only screen and (min-width: 1100px)
+{
+	#header
+	{
+		height: 220px;
+		color: #ffc68f;
+	}
+
+	#logo
+	{
+		padding: 30px 10px;
+		position: relative;
+		width: 500px;
+	}
+
+	#logo .logoTtl, #logo .logoStl
+	{
+		font-weight: 700;
+		font-size: 32px;
+		text-transform: uppercase;
+	}
+
+	#logo .logoTtl
+	{
+		position: absolute;
+		top: 70px;
+		left: 160px;
+	}
+
+	#logo .logoStl
+	{
+		position: absolute;
+		top: 110px;
+		left: 140px;
+		border-bottom: 5px solid #ff6600;
+	}
+
+	#partners
+	{
+		margin-top: 80px;
+	}
+
+	#partners i
+	{
+		position: relative;
+		bottom: 25px;
+	}
+
+	#partners img
+	{
+		padding: 0px 15px;
+	}
+}
+
+@media only screen and (max-width: 1099px)
+{
+	#header
+	{
+		height: 140px;
+		color: #ffc68f;
+	}
+
+	#logo
+	{
+		padding: 15px 10px;
+		position: relative;
+		width: 300px;
+	}
+
+	#logoImg
+	{
+		width: 100px;
+		height: auto;
+	}
+
+	#logo .logoTtl, #logo .logoStl
+	{
+		font-weight: 700;
+		font-size: 20px;
+		text-transform: uppercase;
+	}
+
+	#logo .logoTtl
+	{
+		position: absolute;
+		top: 55px;
+		left: 110px;
+	}
+
+	#logo .logoStl
+	{
+		position: absolute;
+		top: 80px;
+		left: 95px;
+		border-bottom: 3px solid #ff6600;
+	}
+
+	#partners
+	{
+		margin-top: 40px;
+	}
+
+	#partners i
+	{
+		position: relative;
+		bottom: 15px;
+	}
+
+	#partners img
+	{
+		padding: 0px 15px;
+		width: 80px;
+		height: auto;
+	}
+}
+
+
+
+#logo .logoStl b
+{
+	font-weight: inherit;
+}
+
+#head
+{
+	color: #ffc68f;
+	border: 1px solid rgba(255,255,255,0.05);
+	box-shadow: 0px 0px 10px rgba(0,0,0,0.5);
+}
+
+#intro
+{
+	background-image: url("./img/general.png");
+	background-size: cover;
+	background-repeat: no-repeat;
+	background-position: center center;
+	height: 450px;
+	text-align: center;
+	padding: 50px;
+	box-sizing: border-box;
+}
+
+#intro .title
+{
+	text-transform: uppercase;
+	font-size: 24px;
+	font-weight: 700;
+	text-shadow: 0px 0px 20px rgba(0,0,0,0.5);
+}
+
+#intro .title b
+{
+	font-weight: inherit;
+	color: #ff6600;
+}
+
+#subscription
+{
+	padding: 40px;
+}
+
+#subscription .title
+{
+	font-weight: 800px;
+	text-transform: uppercase;
+	font-size: 58px;
+	text-shadow: 0px 1px 0px #996c41, 0px 2px 0px #996c41, 0px 3px 0px #996c41;
+}
+
+#subscription .title a
+{
+	color: #ff6600;
+	text-shadow: 0px 1px 0px #833400, 0px 2px 0px #833400, 0px 3px 0px #833400, 0px 0px 100px #ff6600;
+	text-decoration: none;
+}
+
+#games
+{
+	border-collapse: collapse;
+}
+
+#games tr td
+{
+	background-position: center center;
+	padding: 0px;
+	width: 300px;
+	height: 169px;
+	box-sizing: border-box;
+	position: relative;
+}
+
+#games .name
+{
+	position: absolute;
+	bottom: 0px;
+	left: 0px;
+	right: 0px;
+	height: 30px;
+	background: rgba(0,0,0,0.7);
+	text-transform: uppercase;
+	padding: 10px;
+	padding-left: 20px;
+	text-shadow: 0px 0px 5px rgba(0,0,0,0.5);
+}
+
+#games .name i
+{
+	color: #ff6600;
+	padding-right: 5px;
+}
+
+#content
+{
+	margin-top: 30px;
+	color: #ffc68f;
+	background: #0c0c0c;
+	border: 1px solid rgba(255,255,255,0.05);
+}
+
+#content .leftcol
+{
+	width: 70%;
+	box-sizing: border-box;
+	float: left;
+}
+
+#content .rightcol
+{
+	width: 30%;
+	box-sizing: border-box;
+	float: right;
+	border-left: 1px solid rgba(255,255,255,0.05);
+}
+
+#content .rightcol, #content .leftcol
+{
+	padding: 10px;
+}
+
+#content h1
+{
+	text-transform: uppercase;
+	font-size: 14px;
+	margin: 0px;
+	padding-left: 20px;
+}
+
+#content h1 i
+{
+	color: #ff6600;
+	padding-right: 3px;
+}
+
+.break
+{
+	clear: both;
+	border: 0px;
+}
+
+#footer
+{
+	margin-top: 30px;
+	color: #ffc68f;
+	background: #0c0c0c;
+	border-top: 1px solid rgba(255,255,255,0.05);
+	text-align: center;
+	font-size: 12px;
+	padding: 30px;
+}
+
+#footer a
+{
+	color: #ff6600;
+	text-decoration: none;
+}
