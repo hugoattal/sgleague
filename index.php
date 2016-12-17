@@ -12,10 +12,6 @@ include_once("./class/Template.class.php");
 
 $template = new Template();
 
-$template->header();
-$template->content();
-$template->footer();
-
 $time_end = microtime_float();
 $time = $time_end - $time_start;
 

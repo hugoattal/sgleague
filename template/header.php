@@ -6,6 +6,7 @@
 		<link rel="stylesheet" media="screen,print" href="./style/style.css" />
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.6/d3.min.js" charset="utf-8"></script>
+		<?php echo isset($page_head)?$page_head:''; ?>
 		<!-- <script src="./script.js" charset="utf-8"></script> -->
 	</head>
 	<body>
@@ -23,7 +24,7 @@
 							<i class="fa fa-angle-right" aria-hidden="true"></i>
 							Connexion
 						</a>
-						<a href="#">
+						<a href="index.php?page=register">
 							<i class="fa fa-angle-right" aria-hidden="true"></i>
 							Inscription
 						</a>
@@ -44,9 +45,11 @@
 		<div class="page">
 			<div id="header">
 				<div id="logo" class="left">
-					<img src="./style/img/logo.png" alt="logo" id="logoImg"/>
-					<span class="logoTtl">Student Gaming</span>
-					<span class="logoStl"><b>League</b> 2017</span>
+					<a href="#">
+						<img src="./style/img/logo.png" alt="logo" id="logoImg"/>
+						<span class="logoTtl">Student Gaming</span>
+						<span class="logoStl"><b>League</b> 2017</span>
+					</a>
 				</div>
 				<div id="partners" class="right">
 					<i class="fa fa-chevron-left" aria-hidden="true"></i>
