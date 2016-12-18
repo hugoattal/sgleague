@@ -249,8 +249,6 @@ body
 	}
 }
 
-
-
 #logo .logoStl b
 {
 	font-weight: inherit;
@@ -259,6 +257,12 @@ body
 #logo a
 {
 	color: inherit;
+	transition: all .2s ease-in-out;
+}
+
+#logo a:hover
+{
+	text-shadow: 0px 0px 2px #ff6600;
 }
 
 #head
@@ -333,13 +337,7 @@ body
 	height: 169px;
 	box-sizing: border-box;
 	position: relative;
-	background-size: 100%;
-	transition: all 1s ease-in-out;
-}
-
-#games tr td:hover
-{
-	background-size: 110%;
+	background-size: cover;
 }
 
 #games .name
@@ -386,7 +384,6 @@ body
 
 #content
 {
-	margin-top: 30px;
 	color: #ffc68f;
 	background: #0c0c0c;
 	border: 1px solid rgba(255,255,255,0.05);
