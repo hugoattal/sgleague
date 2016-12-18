@@ -1,7 +1,7 @@
 <div id="content">
 	<div class="container">
 		<h1><i class="fa fa-angle-right" aria-hidden="true"></i> Connexion</h1>
-		<p>Hey, ça faisait longtemps ! Quoi de neuf ? (joke, en fait j'en sais rien et je m'en fous)</p>
+		<p>Hey, ça faisait longtemps ! Quoi de neuf ?</p>
 		<div class="quote">
 			<span class="qcontent">
 				<i>&ldquo;</i>Welcome back, commander.<i>&rdquo;</i>
