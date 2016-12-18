@@ -20,7 +20,7 @@
 						<span class="media"><a href="https://steamcommunity.com/groups/sgnw"><i class="fa fa-steam-square"></i></a></li></span>
 					</div>
 					<div id="meta">
-						<a href="#">
+						<a href="index.php?page=connect">
 							<i class="fa fa-angle-right" aria-hidden="true"></i>
 							Connexion
 						</a>
