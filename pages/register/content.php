@@ -204,23 +204,23 @@ else
 		<p>Comme l'ont dit de nombreux intellectuels avant moi :</p>
 		<div class="quote">
 			<span class="qcontent">
-				<i>&ldquo;</i>Everybody P90 ! Rush B cyka blyat !<br />Don't stop, don't stop...<i>&rdquo;</i>
+				<i>&ldquo;</i>Are we rushin' in, or are we goin'<br />sneaky-beaky like?<i>&rdquo;</i>
 			</span>
 			<span class="qauthor">
 				- Un joueur de la SGL 2016
 			</span>
 		</div>
-		<p>Ce qui se traduit approximativement par "seuls les lâches abandonnent", et comme vous, vous n'êtes pas un lâche (vous êtes quelqu'un de bien, ça se voit), vous allez continuer l'inscription JUSQ'-AU-BOUT ! ('fin bon, ça prends 30 secondes max, hein...)</p>
+		<p>Ce qui se traduit approximativement par "on y va jusqu'au bout, rapidement ou lentement", et comme vous êtes quelqu'un de bien, vous allez continuer l'inscription JUSQ'-AU-BOUT !</p>
 		<br />
 		<div class="form">
 			<form action="index.php?page=register" method="post">
 				<table>
 					<tr><td><h3>Pseudo <b>*</b> :</h3></td><td><input type="text" name="login" <?=isset($form_login)?'value="'.$form_login.'"':''?>/><br />
 					<?=$error_login?>
-					<div class="smallquote">Pas de "xXxLeBoGossDu92xXx", hein ! Enfin bon, je dis ça pour vous.</div></td></tr>
+					<div class="smallquote">C'est votre pseudo qui vous permettra de vous identifier, alors ne vous trompez pas !</div></td></tr>
 					<tr><td><h3>Password <b>*</b> :</h3></td><td><input type="password" name="pass" /><br />
 					<?=$error_pass?>
-					<div class="smallquote">Et comme je sais que vous allez faire n'imp', on va dire au moins 8 caractères chiffres + lettres.</div></td></tr>
+					<div class="smallquote">On va dire au moins 8 caractères chiffres + lettres. 100% incraquable par la NSA.</div></td></tr>
 					<tr><td><h3>Mail <b>*</b> :</h3></td><td><input type="mail" name="mail" <?=isset($form_mail)?'value="'.$form_mail.'"':''?>/><br />
 					<?=$error_mail?>
 					<div class="smallquote">Essayez de mettre votre mail étudiant, comme ça vous n'aurez pas à scanner votre carte étudiante.</div></td></tr>
@@ -229,7 +229,7 @@ else
 					<div class="smallquote">Pour ceux qui n'écoutent rien : on doit être étudiant pour participer à la SGL !</div></td></tr>
 				</table>
 				<br /><br />
-				<p><b>*</b> : Oui oui, tout est obligatoire ! Ça me paraissait évident pourtant. Vous choisirez vos jeux et vos équipes plus tard.</p>
+				<p><b>*</b> : Oui oui, tout est obligatoire ! Vous choisirez vos jeux et vos équipes plus tard.</p>
 				<br /><br />
 				<div class="g-recaptcha" data-sitekey="6LdkIg8UAAAAAPzgYebRn65Lx2esFnRzOF39fMBf" data-theme="dark"></div>
 				<?=$error_captcha?>
