@@ -4,18 +4,30 @@ $error_login = '';
 $error_pass = '';
 $error_mail = '';
 $error_school = '';
+$error_captcha = '';
+
+$register_flag = false;
 
 if (isset($_POST["sent"]))
 {
+	include_once("./generic/recaptcha.php");
+	include_once("./generic/randomstr.php");
+
+	include_once("./class/Database.class.php");
+
+	$database = new Database();
+
 	$check_login = 1;
 	$check_pass = 1;
 	$check_mail = 1;
 	$check_school = 1;
+	$check_captcha = 1;
 
 	$form_login = isset($_POST['login']) ? $_POST['login'] : '';
 	$form_pass = isset($_POST['pass']) ? $_POST['pass'] : '';
 	$form_mail = isset($_POST['mail']) ? $_POST['mail'] : '';
 	$form_school = isset($_POST['school']) ? $_POST['school'] : '';
+	$form_captcha = isset($_POST['g-recaptcha-response']) ? $_POST['g-recaptcha-response'] : '';
 
 //  ----- [ Check login ] --------------------------------------------------
 
@@ -23,7 +35,18 @@ if (isset($_POST["sent"]))
 	{
 		if (strlen($form_login) >= 3)
 		{
-			if (preg_match("/[^A-Za-z0-9\!\?\.\-\#_]/", $form_login))
+			if (!(preg_match("/[^A-Za-z0-9\!\?\.\-\#_]/", $form_login)))
+			{
+				$temp = $database->req('SELECT COUNT(*) as exist FROM sgl_users WHERE login="'.addslashes($form_login).'"');
+				$data = $temp->fetch();
+
+				if ($data["exist"] != 0)
+				{
+					$check_login = -4;
+					$error_login = "Désolé, quelqu'un est passé avant vous pour ce pseudo...";
+				}
+			}
+			else
 			{
 				$check_login = -3;
 				$error_login = "Pas de caractères chelous ! Les admins vous pas réussir à taper votre pseudo...<br />Vous avez droit aux chiffres, aux lettres (sans accent) et à . ? ! # _ -";
@@ -79,7 +102,18 @@ if (isset($_POST["sent"]))
 
 	if (strlen($form_mail) != 0)
 	{
-		if(filter_var($form_mail, FILTER_VALIDATE_EMAIL) == false)
+		if (filter_var($form_mail, FILTER_VALIDATE_EMAIL) == true)
+		{
+			$temp = $database->req('SELECT COUNT(*) as exist FROM sgl_users WHERE mail="'.addslashes($form_mail).'"');
+			$data = $temp->fetch();
+
+			if ($data["exist"] != 0)
+			{
+				$check_mail = -3;
+				$error_mail = "Vous êtes pas déjà inscrit avec ce mail ?<br />Non parce que si vous avez juste oublié votre mot de passe, on peut le récupérer hein ?";
+			}
+		}
+		else
 		{
 			$check_mail = -2;
 			$error_mail = "Comment on va vous spam si votre mail ne marche pas ?";
@@ -109,8 +143,56 @@ if (isset($_POST["sent"]))
 		$error_school = "<div class=\"error\"><i class=\"fa fa-exclamation-triangle\" aria-hidden=\"true\"></i>".$error_school."</div>";
 	}
 
-	//'<i class="fa fa-exclamation-triangle" aria-hidden="true"></i>'
+//  ----- [ Check captcha ] --------------------------------------------------
+
+	if (!validCaptcha($form_captcha))
+	{
+		$check_captcha = -1;
+		$error_captcha = "Même pas fichu de cocher un truc ?";
+	}
+
+	if ($check_captcha < 0)
+	{
+		$error_captcha = "<div class=\"error\" style=\"text-align:center;\"><i class=\"fa fa-exclamation-triangle\" aria-hidden=\"true\"></i>".$error_captcha."</div>";
+	}
+
+//  ----- [ Final check ] --------------------------------------------------
+
+	if (($check_login > 0) && ($check_pass > 0) && ($check_mail > 0) && ($check_school > 0) && ($check_captcha > 0))
+	{
+		$register_flag = true;
+	}
 }
+
+if ($register_flag)
+{
+	$salt = random_str(100);
+	$hash = sha1($salt.$form_pass.$CONFIG_hash)
+
+
+?>
+
+<div id="content">
+	<div class="container">
+		<h1><i class="fa fa-angle-right" aria-hidden="true"></i> Inscription</h1>
+		<p>Et voilà, c'était pas si dur !</p>
+		<div class="quote">
+			<span class="qcontent">
+				<i>&ldquo;</i>Easy peasy, lemon squeezy<i>&rdquo;</i>
+			</span>
+			<span class="qauthor">
+				- Un joueur de la SGL 2016
+			</span>
+		</div>
+		<p>Plus qu'à aller cliquer sur le lien d'activation qu'on vient de vous envoyer par mail (à cette adresse si vous avez déjà oublié ce que vous aviez mis : <?=htmlspecialchars($form_mail)?>)</p>
+		<br />
+	</div>
+</div>
+
+<?php
+}
+else
+{
 ?>
 
 <div id="content">
@@ -144,9 +226,10 @@ if (isset($_POST["sent"]))
 					<div class="smallquote">Pour ceux qui n'écoutent rien : on doit être étudiant pour participer à la SGL !</div></td></tr>
 				</table>
 				<br /><br />
-				<p><b>*</b> : Oui, tout est obligatoire ! Ça me paraissaient évident pourtant.</p>
-				<br /><br /><br />
+				<p><b>*</b> : Oui oui, tout est obligatoire ! Ça me paraissait évident pourtant. Vous choisirez vos jeux et vos équipes plus tard.</p>
+				<br /><br />
 				<div class="g-recaptcha" data-sitekey="6LdkIg8UAAAAAPzgYebRn65Lx2esFnRzOF39fMBf" data-theme="dark"></div>
+				<?=$error_captcha?>
 				<br /><br />
 				<div class="smallquote">Je ne suis pas un robot ! Mes faux pas me collent à la peau... Je ne suis pas un robot ! Faut pas croire ce que disent les journaux...<br />Je ne suis pas un robot, un roboooooot ! (Bon ok, je sors =>[])</div>
 				<br /><br /><br />
@@ -156,3 +239,6 @@ if (isset($_POST["sent"]))
 		</div>
 	</div>
 </div>
+<?php
+}
+?>

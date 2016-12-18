@@ -8,6 +8,8 @@ function microtime_float()
 
 $time_start = microtime_float();
 
+include_once("./config.php");
+
 include_once("./class/Template.class.php");
 
 $template = new Template();
