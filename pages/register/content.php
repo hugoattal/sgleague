@@ -167,9 +167,12 @@ if (isset($_POST["sent"]))
 if ($register_flag)
 {
 	$salt = random_str(100);
-	$hash = sha1($salt.$form_pass.$CONFIG_hash)
+	$activation = random_str(20);
 
+	global $CONFIG_hash;
+	$hash = sha1($salt.$form_pass.$CONFIG_hash);
 
+	$database->req('INSERT INTO sgl_users (login, pass, salt, mail, activation, school, register) VALUES("'.addslashes($form_login).'", "'.$hash.'", "'.$salt.'", "'.addslashes($form_mail).'", "'.$activation.'", "'.addslashes($form_school).'", '.time().')');
 ?>
 
 <div id="content">

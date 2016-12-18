@@ -160,6 +160,7 @@ body
 		position: absolute;
 		top: 70px;
 		left: 160px;
+		transition: all .2s ease-in-out;
 	}
 
 	#logo .logoStl
@@ -168,6 +169,17 @@ body
 		top: 110px;
 		left: 140px;
 		border-bottom: 5px solid #ff6600;
+		transition: all .2s ease-in-out;
+	}
+
+	#logo a:hover .logoTtl
+	{
+		left: 170px;
+	}
+
+	#logo a:hover .logoStl
+	{
+		left: 150px;
 	}
 
 	#partners
@@ -220,6 +232,7 @@ body
 		position: absolute;
 		top: 55px;
 		left: 110px;
+		transition: all .2s ease-in-out;
 	}
 
 	#logo .logoStl
@@ -228,6 +241,17 @@ body
 		top: 80px;
 		left: 95px;
 		border-bottom: 3px solid #ff6600;
+		transition: all .2s ease-in-out;
+	}
+
+	#logo a:hover .logoTtl
+	{
+		left: 120px;
+	}
+
+	#logo a:hover .logoStl
+	{
+		left: 105px;
 	}
 
 	#partners
@@ -257,12 +281,6 @@ body
 #logo a
 {
 	color: inherit;
-	transition: all .2s ease-in-out;
-}
-
-#logo a:hover
-{
-	text-shadow: 0px 0px 2px #ff6600;
 }
 
 #head
