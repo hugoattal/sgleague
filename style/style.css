@@ -437,11 +437,19 @@ body
 	text-transform: uppercase;
 	font-size: 13px;
 	margin: 0px;
+	padding: 10px 0px;
 }
 
 #content p
 {
 	margin: 10px 0px;
+	text-align: left;
+}
+
+#content b
+{
+	font-weight: inherit;
+	color: #ff6600;
 }
 
 .quote
@@ -483,6 +491,19 @@ body
 {
 	font-size: 11px;
 	font-style: italic;
+	opacity: 0.5;
+}
+
+.error
+{
+	color: #d00000;
+	text-align: left;
+	padding: 5px 0px;
+}
+
+.error i
+{
+	padding-right: 5px;
 }
 
 .form
@@ -500,6 +521,7 @@ body
 .form table tr td
 {
 	padding: 10px;
+	vertical-align: top;
 }
 
 .form .g-recaptcha
@@ -510,16 +532,16 @@ body
 input, textarea
 {
 	padding: 8px 10px;
-	width: 400px;
-	background: #111111;
+	width: 500px;
+	background: #0c0c0c;
 	border: 1px solid #ffc68f;
-	color: #ffc68f;
+	color: #ff6600;
 	transition: all .2s ease-in-out;
 }
 
 input:focus, input:hover, textarea:focus, textarea:hover
 {
-	color: #ff6600;
+	border: 1px solid #ff6600;
 }
 
 .form button

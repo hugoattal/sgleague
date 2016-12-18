@@ -1,3 +1,118 @@
+<?php
+
+$error_login = '';
+$error_pass = '';
+$error_mail = '';
+$error_school = '';
+
+if (isset($_POST["sent"]))
+{
+	$check_login = 1;
+	$check_pass = 1;
+	$check_mail = 1;
+	$check_school = 1;
+
+	$form_login = isset($_POST['login']) ? $_POST['login'] : '';
+	$form_pass = isset($_POST['pass']) ? $_POST['pass'] : '';
+	$form_mail = isset($_POST['mail']) ? $_POST['mail'] : '';
+	$form_school = isset($_POST['school']) ? $_POST['school'] : '';
+
+//  ----- [ Check login ] --------------------------------------------------
+
+	if (strlen($form_login) != 0)
+	{
+		if (strlen($form_login) >= 3)
+		{
+			if (preg_match("/[^A-Za-z0-9\!\?\.\-\#_]/", $form_login))
+			{
+				$check_login = -3;
+				$error_login = "Pas de caractères chelous ! Les admins vous pas réussir à taper votre pseudo...<br />Vous avez droit aux chiffres, aux lettres (sans accent) et à . ? ! # _ -";
+			}
+		}
+		else
+		{
+			$check_login = -2;
+			$error_login = "Moins de 3 caractères le pseudo 0_o ? C'est une blague ?";
+		}
+	}
+	else
+	{
+		$check_login = -1;
+		$error_login = "Et ouais, il faut rentrer un pseudo... 'faut tout leur apprendre...";
+	}
+
+	if ($check_login < 0)
+	{
+		$error_login = "<div class=\"error\"><i class=\"fa fa-exclamation-triangle\" aria-hidden=\"true\"></i>".$error_login."</div>";
+	}
+
+//  ----- [ Check pass ] --------------------------------------------------
+
+	if (strlen($form_pass) != 0)
+	{
+		if (strlen($form_pass) >= 8)
+		{
+			if (!(preg_match('/[A-Za-z]/', $form_pass) && preg_match('/[0-9]/', $form_pass)))
+			{
+				$check_pass = -3;
+				$error_pass = "On a dit au moins une lettre et un chiffre ! Si vous m'écoutez même pas aussi...";
+			}
+		}
+		else
+		{
+			$check_pass = -2;
+			$error_pass = "On a dit au moins 8 caractères ! Voici de quoi vous aider : 1, 2, 3, 4, 5, 6, 7, 8, 9, 10.<br />Me remerciez pas, c'est moi.";
+		}
+	}
+	else
+	{
+		$check_pass = -1;
+		$error_pass = "Vous voulez que je vous en génère un pour vous ? Flemme.";
+	}
+
+	if ($check_pass < 0)
+	{
+		$error_pass = "<div class=\"error\"><i class=\"fa fa-exclamation-triangle\" aria-hidden=\"true\"></i>".$error_pass."</div>";
+	}
+
+//  ----- [ Check mail ] --------------------------------------------------
+
+	if (strlen($form_mail) != 0)
+	{
+		if(filter_var($form_mail, FILTER_VALIDATE_EMAIL) == false)
+		{
+			$check_mail = -2;
+			$error_mail = "Comment on va vous spam si votre mail ne marche pas ?";
+		}
+	}
+	else
+	{
+		$check_mail = -1;
+		$error_mail = "Comment on va vous envoyer des petits mots d'amour si on a pas votre mail :'( ?";
+	}
+
+	if ($check_mail < 0)
+	{
+		$error_mail = "<div class=\"error\"><i class=\"fa fa-exclamation-triangle\" aria-hidden=\"true\"></i>".$error_mail."</div>";
+	}
+
+//  ----- [ Check school ] --------------------------------------------------
+
+	if (strlen($form_school) == 0)
+	{
+		$check_school = -1;
+		$error_school = "C'est pas parce que vous en avez honte que vous pouvez ne pas la mettre !";
+	}
+
+	if ($check_school < 0)
+	{
+		$error_school = "<div class=\"error\"><i class=\"fa fa-exclamation-triangle\" aria-hidden=\"true\"></i>".$error_school."</div>";
+	}
+
+	//'<i class="fa fa-exclamation-triangle" aria-hidden="true"></i>'
+}
+?>
+
 <div id="content">
 	<div class="container">
 		<h1><i class="fa fa-angle-right" aria-hidden="true"></i> Inscription</h1>
@@ -13,17 +128,31 @@
 		<p>Ce qui se traduit approximativement par "seuls les lâches abandonnent", et comme vous, vous n'êtes pas un lâche (vous êtes quelqu'un de bien, ça se voit), vous allez continuer l'inscription JUSQ'-AU-BOUT ! ('fin bon, ça prends 30 secondes max, hein...)</p>
 		<br />
 		<div class="form">
-			<table>
-				<tr><td><h3>Pseudo :</h3></td><td><input type="text" name="pseudo" /></td></tr>
-				<tr><td><h3>Mail :</h3></td><td><input type="text" name="mail" /></td></tr>
-				<tr><td><h3>Ecole :</h3></td><td><input type="text" name="school" /></td></tr>
-			</table>
-			<br /><br /><br />
-			<div class="g-recaptcha" data-sitekey="6LdkIg8UAAAAAPzgYebRn65Lx2esFnRzOF39fMBf" data-theme="dark"></div>
-			<br /><br />
-			<div class="smallquote">Je ne suis pas un robot ! Mes faux pas me collent à la peau... Je ne suis pas un robot ! Faut pas croire ce que disent les journaux...<br />Je ne suis pas un robot, un roboooooot ! (Bon ok, je sors =>[])</div>
-			<br /><br /><br />
-			<button type="submit" form="register" value="Submit">S'inscrire</button>
+			<form action="index.php?page=register" method="post">
+				<table>
+					<tr><td><h3>Pseudo <b>*</b> :</h3></td><td><input type="text" name="login" <?=isset($form_login)?'value="'.$form_login.'"':''?>/><br />
+					<?=$error_login?>
+					<div class="smallquote">Pas de "xXxLeBoGossDu92xXx", hein ! Enfin bon, je dis ça pour vous.</div></td></tr>
+					<tr><td><h3>Password <b>*</b> :</h3></td><td><input type="password" name="pass" /><br />
+					<?=$error_pass?>
+					<div class="smallquote">Et comme je sais que vous allez faire n'imp', on va dire au moins 8 caractères chiffres + lettres.</div></td></tr>
+					<tr><td><h3>Mail <b>*</b> :</h3></td><td><input type="mail" name="mail" <?=isset($form_mail)?'value="'.$form_mail.'"':''?>/><br />
+					<?=$error_mail?>
+					<div class="smallquote">Essayez de mettre votre mail étudiant, comme ça vous n'aurez pas à scanner votre carte étudiante.</div></td></tr>
+					<tr><td><h3>Ecole <b>*</b> :</h3></td><td><input type="text" name="school" <?=isset($form_school)?'value="'.$form_school.'"':''?>/><br />
+					<?=$error_school?>
+					<div class="smallquote">Pour ceux qui n'écoutent rien : on doit être étudiant pour participer à la SGL !</div></td></tr>
+				</table>
+				<br /><br />
+				<p><b>*</b> : Oui, tout est obligatoire ! Ça me paraissaient évident pourtant.</p>
+				<br /><br /><br />
+				<div class="g-recaptcha" data-sitekey="6LdkIg8UAAAAAPzgYebRn65Lx2esFnRzOF39fMBf" data-theme="dark"></div>
+				<br /><br />
+				<div class="smallquote">Je ne suis pas un robot ! Mes faux pas me collent à la peau... Je ne suis pas un robot ! Faut pas croire ce que disent les journaux...<br />Je ne suis pas un robot, un roboooooot ! (Bon ok, je sors =>[])</div>
+				<br /><br /><br />
+				<input type="hidden" name="sent" value="sent">
+				<button type="submit" value="Submit">S'inscrire</button>
+			</form>
 		</div>
 	</div>
 </div>
