@@ -20,6 +20,23 @@
 						<span class="media"><a href="https://steamcommunity.com/groups/sgnw"><i class="fa fa-steam-square"></i></a></li></span>
 					</div>
 					<div id="meta">
+<?php
+if (isset($_SESSION["sgl_id"]))
+{
+?>
+						<a href="#">
+							<i class="fa fa-angle-right" aria-hidden="true"></i>
+							<?=htmlspecialchars($_SESSION["sgl_login"])?>
+						</a>
+						<a href="index.php?page=connect&disconnect=1">
+							<i class="fa fa-angle-right" aria-hidden="true"></i>
+							Déconnexion
+						</a>
+<?php
+}
+else
+{
+?>
 						<a href="index.php?page=connect">
 							<i class="fa fa-angle-right" aria-hidden="true"></i>
 							Connexion
@@ -28,6 +45,9 @@
 							<i class="fa fa-angle-right" aria-hidden="true"></i>
 							Inscription
 						</a>
+<?php
+}
+?>
 					</div>
 				</div>
 				<div class="right">

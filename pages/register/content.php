@@ -173,12 +173,13 @@ if ($register_flag)
 	$hash = sha1($salt.$form_pass.$CONFIG_hash);
 
 	$database->req('INSERT INTO sgl_users (login, pass, salt, mail, activation, school, register) VALUES("'.addslashes($form_login).'", "'.$hash.'", "'.$salt.'", "'.addslashes($form_mail).'", "'.$activation.'", "'.addslashes($form_school).'", '.time().')');
+
+	// TODO : mail d'activation
 ?>
 
 <div id="content">
 	<div class="container">
 		<h1><i class="fa fa-angle-right" aria-hidden="true"></i> Inscription</h1>
-		<p>Et voilà, c'était pas si dur !</p>
 		<div class="quote">
 			<span class="qcontent">
 				<i>&ldquo;</i>Easy peasy, lemon squeezy<i>&rdquo;</i>
@@ -187,7 +188,7 @@ if ($register_flag)
 				- Un joueur de la SGL 2016
 			</span>
 		</div>
-		<p>Plus qu'à aller cliquer sur le lien d'activation qu'on vient de vous envoyer par mail (à cette adresse si vous avez déjà oublié ce que vous aviez mis : <?=htmlspecialchars($form_mail)?>)</p>
+		<p>Et voilà, c'était pas si dur ! Plus qu'à aller cliquer sur le lien d'activation qu'on vient de vous envoyer par mail (à cette adresse si vous avez déjà oublié ce que vous aviez mis : <?=htmlspecialchars($form_mail)?>)</p>
 		<br />
 	</div>
 </div>
@@ -201,7 +202,6 @@ else
 <div id="content">
 	<div class="container">
 		<h1><i class="fa fa-angle-right" aria-hidden="true"></i> Inscription</h1>
-		<p>Comme l'ont dit de nombreux intellectuels avant moi :</p>
 		<div class="quote">
 			<span class="qcontent">
 				<i>&ldquo;</i>Are we rushin' in, or are we goin'<br />sneaky-beaky like?<i>&rdquo;</i>
@@ -210,7 +210,7 @@ else
 				- Un joueur de la SGL 2016
 			</span>
 		</div>
-		<p>Ce qui se traduit approximativement par "on y va jusqu'au bout, rapidement ou lentement", et comme vous êtes quelqu'un de bien, vous allez continuer l'inscription JUSQ'-AU-BOUT !</p>
+		<p>La citation du dessus se traduit approximativement par "on y va jusqu'au bout, rapidement ou lentement", et comme vous êtes quelqu'un de bien, vous allez continuer l'inscription JUSQ'-AU-BOUT (et rapidement en plus) !</p>
 		<br />
 		<div class="form">
 			<form action="index.php?page=register" method="post">

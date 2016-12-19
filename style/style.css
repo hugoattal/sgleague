@@ -408,6 +408,17 @@ body
 	font-size: 13px;
 }
 
+#content a
+{
+	color: #ff6600;
+	text-decoration: none;
+}
+
+#content a:hover
+{
+	text-decoration: underline;
+}
+
 .container
 {
 	padding: 20px;
@@ -559,7 +570,7 @@ input:focus, input:hover, textarea:focus, textarea:hover
 	border: 1px solid #ff6600;
 }
 
-.form button
+.form button, #content a.button
 {
 	border: 1px solid #ffc68f;
 	padding: 10px 40px;
@@ -570,10 +581,11 @@ input:focus, input:hover, textarea:focus, textarea:hover
 	cursor: pointer;
 }
 
-.form button:hover
+.form button:hover, #content a.button:hover
 {
 	color: #0c0c0c;
 	background: #ffc68f;
+	text-decoration: none;
 }
 
 .break
