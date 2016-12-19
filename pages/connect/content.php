@@ -42,7 +42,7 @@ else if (isset($_GET["recover"]))
 		<p>La prochaine fois, faites comme mundo pour ne plus oublier votre mot de passe ! Quoique le dire à voix haute n'est peut être pas une super idée...</p>
 		<div class="form">
 			<form action="index.php?page=connect" method="post">
-				<table>
+				<table class="form_table">
 					<tr><td><h3>Pseudo :</h3></td><td><input type="text" name="login" /><br />
 					<div class="smallquote">Pour regénérer un mot passe, il me faut votre pseudo.</div></td></tr>
 					<tr><td><h3>Mail :</h3></td><td><input type="password" name="pass" /><br />
@@ -131,7 +131,7 @@ else
 		<?=isset($_POST["sent"])?"<div class=\"error\" style=\"text-align:center;\"><i class=\"fa fa-exclamation-triangle\" aria-hidden=\"true\"></i>Hum... Vous êtes sûr que c'est le bon mot de passe ?</div>":""?>
 		<div class="form">
 			<form action="index.php?page=connect" method="post">
-				<table>
+				<table class="form_table">
 					<tr><td><h3>Pseudo :</h3></td><td><input type="text" name="login" /><br />
 					<div class="smallquote">C'est pas le mail, c'est le login, hein ! 'fin votre pseudo quoi...</div></td></tr>
 					<tr><td><h3>Password :</h3></td><td><input type="password" name="pass" /><br />

@@ -1,4 +1,7 @@
 <?php
+
+// TODO : add 404 and connection needed
+
 class Template
 {
 	public $page = "home";
@@ -12,6 +15,11 @@ class Template
 		}
 		
 		include("./pages/".$this->page."/config.php");
+
+		if (isset($need_connection) && (!isset($_SESSION["sgl_id"])))
+		{
+			$this->page = "home";
+		}
 
 		include("./template/header.php");
 
