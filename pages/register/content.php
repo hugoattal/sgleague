@@ -214,7 +214,7 @@ else
 		<br />
 		<div class="form">
 			<form action="index.php?page=register" method="post">
-				<table>
+				<table class="form_table">
 					<tr><td><h3>Pseudo <b>*</b> :</h3></td><td><input type="text" name="login" <?=isset($form_login)?'value="'.$form_login.'"':''?>/><br />
 					<?=$error_login?>
 					<div class="smallquote">C'est votre pseudo qui vous permettra de vous identifier, alors ne vous trompez pas !</div></td></tr>

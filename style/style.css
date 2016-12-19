@@ -538,16 +538,21 @@ body
 	text-align: center;
 }
 
-.form table
+.form_table
 {
 	display: inline-block;
 	text-align: left;
 }
 
-.form table tr td
+.form_table tr td
 {
 	padding: 10px;
 	vertical-align: top;
+}
+
+.form_table tr td:first-of-type
+{
+	width: 100px;
 }
 
 .form .g-recaptcha
@@ -555,7 +560,31 @@ body
 	display: inline-block;
 }
 
-input, textarea
+.line_table
+{
+	width: 100%;
+}
+
+.line_table td:nth-of-type(2)
+{
+	width: 0px;
+	white-space: nowrap;
+	padding: 0px 20px;
+}
+
+hr.line
+{
+	width: 100%;
+	height: 1px;
+	background: #ff6600;
+	border: 0px;
+	display: inline-block;
+	padding: 0px;
+	margin: 0px;
+	margin-bottom: 4px;
+}
+
+input, textarea, select
 {
 	padding: 8px 10px;
 	width: 500px;
@@ -563,6 +592,49 @@ input, textarea
 	border: 1px solid #ffc68f;
 	color: #ff6600;
 	transition: all .2s ease-in-out;
+}
+
+input[type="radio"]
+{
+	width: 10px;
+	position: absolute;
+ 	left: -1000px;
+}
+
+input[type="radio"] + label
+{
+	position: relative;
+	padding-left: 20px;
+	cursor: pointer;
+}
+
+input[type="radio"] + label:before
+{
+	content: '';
+	position: absolute;
+	left: 0px;
+	top: 2px;
+	width: 12px;
+	height: 12px;
+	border: 1px solid #ffc68f;
+}
+
+input[type="radio"] + label:after
+{
+	content: '';
+	position: absolute;
+	left: 2px;
+	top: 4px;
+	width: 10px;
+	height: 10px;
+	background-color: #ff6600;
+	opacity: 0;
+	transition: all .5s;
+}
+
+input[type="radio"]:checked + label:after
+{
+	opacity: 1;
 }
 
 input:focus, input:hover, textarea:focus, textarea:hover
