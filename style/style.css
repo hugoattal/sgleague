@@ -660,6 +660,44 @@ input:focus, input:hover, textarea:focus, textarea:hover
 	text-decoration: none;
 }
 
+.playercard, .buttoncard
+{
+	display: inline-block;
+	padding: 20px;
+	width: 300px;
+	border: 1px solid #ffc68f;
+	margin: 5px;
+}
+
+.playercard
+{
+	text-align: left;
+}
+
+.buttoncard
+{
+	text-align: center;
+	cursor: pointer;
+}
+
+.buttoncard:hover
+{
+	background-color: #ffc68f;
+	color: #0c0c0c;
+}
+
+.playercard .playername
+{
+	font-weight: bold;
+	color: #ff6600;
+}
+
+.playercard .playertype
+{
+	float: right;
+	opacity: 0.5;
+}
+
 .break
 {
 	clear: both;
