@@ -24,7 +24,7 @@
 if (isset($_SESSION["sgl_id"]))
 {
 ?>
-						<a href="#">
+						<a href="index.php?page=account">
 							<i class="fa fa-angle-right" aria-hidden="true"></i>
 							<?=htmlspecialchars($_SESSION["sgl_login"])?>
 						</a>
@@ -52,12 +52,20 @@ else
 				</div>
 				<div class="right">
 					<div id="menu">
-						<a href="index.php" class="selected">Accueil</a>
-						<a href="#">Jeux</a>
-						<a href="#">Tournoi</a>
-						<a href="#">Stream</a>
-						<a href="#">Informations</a>
-						<a href="#">Contact</a>
+<?php
+
+if (!isset($page_tab))
+{
+	$page_tab = "acc";
+}
+
+?>
+						<a href="index.php" <?=$page_tab=="acc"?'class="selected"':''?>>Accueil</a>
+						<a href="index.php?page=games" <?=$page_tab=="games"?'class="selected"':''?>>Jeux</a>
+						<a href="#" <?=$page_tab=="x"?'class="selected"':''?>>Tournoi</a>
+						<a href="#" <?=$page_tab=="x"?'class="selected"':''?>>Stream</a>
+						<a href="#" <?=$page_tab=="x"?'class="selected"':''?>>Informations</a>
+						<a href="#" <?=$page_tab=="x"?'class="selected"':''?>>Contact</a>
 					</div>
 				</div>
 			</div>
