@@ -1,6 +1,8 @@
 <?php
 
-if ((isset($_GET["disconnect"])) AND (parse_url($_SERVER['HTTP_REFERER'], PHP_URL_HOST) == $_SERVER['SERVER_ADDR'])) // CSRF check
+global $csrf_check;
+
+if ((isset($_GET["disconnect"])) AND $csrf_check)
 {
 	session_destroy();
 ?>
