@@ -78,8 +78,7 @@ else
 		$temp = $database->req('SELECT id, login, pass, salt, type FROM sgl_users WHERE LOWER(login)=LOWER("'.addslashes($form_login).'")');
 		$data = $temp->fetch();
 
-		global $CONFIG_hash;
-		$hash = sha1($data["salt"].$form_pass.$CONFIG_hash);
+		$hash = sha1($data["salt"].$form_pass.CONFIG_SALT);
 
 		if ($hash == $data["pass"])
 		{

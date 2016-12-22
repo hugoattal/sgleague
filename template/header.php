@@ -6,8 +6,8 @@
 		<link rel="stylesheet" media="screen,print" href="./style/style.css" />
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.6/d3.min.js" charset="utf-8"></script>
-		<?php echo isset($page_head)?$page_head:''; ?>
-		<!-- <script src="./script.js" charset="utf-8"></script> -->
+		<?=isset($page_head)?$page_head:'';?>
+		<?=isset($page_script)?'<script src="./pages/'.CURRENT_PAGE.'/script.js" charset="utf-8"></script>':''?>
 	</head>
 	<body>
 		<div id="topmenu">
@@ -28,7 +28,7 @@ if (isset($_SESSION["sgl_id"]))
 							<i class="fa fa-angle-right" aria-hidden="true"></i>
 							<?=htmlspecialchars($_SESSION["sgl_login"])?>
 						</a>
-						<a href="index.php?page=connect&disconnect=1">
+						<a href="index.php?page=connect&amp;disconnect=1">
 							<i class="fa fa-angle-right" aria-hidden="true"></i>
 							Déconnexion
 						</a>

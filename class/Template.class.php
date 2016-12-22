@@ -21,6 +21,8 @@ class Template
 			$this->page = "home";
 		}
 
+		define("CURRENT_PAGE", $this->page);
+
 		include("./template/header.php");
 
 		include("./pages/".$this->page."/content.php");

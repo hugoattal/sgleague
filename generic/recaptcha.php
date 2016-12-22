@@ -2,12 +2,10 @@
 
 function validCaptcha($form_captcha) 
 {
-	global $CONFIG_recaptcha_private;
-
 	try
 	{
 		$url = 'https://www.google.com/recaptcha/api/siteverify';
-		$data = ['secret'   => $CONFIG_recaptcha_private,
+		$data = ['secret'   => RECAPTCHA_PRIVATE,
 			'response' => $form_captcha,
 			'remoteip' => $_SERVER['REMOTE_ADDR']];
 
