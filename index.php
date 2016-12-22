@@ -13,7 +13,14 @@ function microtime_float()
 
 $time_start = microtime_float();
 
-$csrf_check = (parse_url($_SERVER['HTTP_REFERER'], PHP_URL_HOST) == $_SERVER['SERVER_ADDR']);
+if (isset($_SERVER['HTTP_REFERER']))
+{
+	$csrf_check = (parse_url($_SERVER['HTTP_REFERER'], PHP_URL_HOST) == $_SERVER['SERVER_ADDR']);
+}
+else
+{
+	$csrf_check = false;
+}
 
 include_once("./config.php");
 

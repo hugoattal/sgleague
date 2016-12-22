@@ -169,8 +169,7 @@ if ($register_flag)
 	$salt = random_str(100);
 	$activation = random_str(20);
 
-	global $CONFIG_hash;
-	$hash = sha1($salt.$form_pass.$CONFIG_hash);
+	$hash = sha1($salt.$form_pass.CONFIG_SALT);
 
 	$database->req('INSERT INTO sgl_users (login, pass, salt, mail, activation, school, register) VALUES("'.addslashes($form_login).'", "'.$hash.'", "'.$salt.'", "'.addslashes($form_mail).'", "'.$activation.'", "'.addslashes($form_school).'", '.time().')');
 
@@ -231,7 +230,7 @@ else
 				<br /><br />
 				<p><b>*</b> : Oui oui, tout est obligatoire ! Vous choisirez vos jeux et vos équipes plus tard.</p>
 				<br /><br />
-				<div class="g-recaptcha" data-sitekey="6LdkIg8UAAAAAPzgYebRn65Lx2esFnRzOF39fMBf" data-theme="dark"></div>
+				<div class="g-recaptcha" data-sitekey="<?=RECAPTCHA_PUBLIC;?>" data-theme="dark"></div>
 				<?=$error_captcha?>
 				<br /><br />
 				<div class="smallquote">Je ne suis pas un robot ! Mes faux pas me collent à la peau... Je ne suis pas un robot ! Faut pas croire ce que disent les journaux...<br />Je ne suis pas un robot, un roboooooot ! (Bon ok, je sors =>[])</div>
