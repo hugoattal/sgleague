@@ -15,7 +15,7 @@ class Mail
 		$service_url = 'https://api.mailgun.net/v3/mg.league.sgnw.fr/messages';
 		$curl = curl_init($service_url);
 		curl_setopt($curl, CURLOPT_HTTPAUTH, CURLAUTH_BASIC);
-		curl_setopt($curl, CURLOPT_USERPWD, "api:key-b1699a3f9d3b38ce6f5d9e1ff04ea1f3"); 
+		curl_setopt($curl, CURLOPT_USERPWD, "api:".MAILGUN_KEY); 
 
 		curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
 		curl_setopt($curl, CURLOPT_POST, true);
