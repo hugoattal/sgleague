@@ -663,21 +663,25 @@ input:focus, input:hover, textarea:focus, textarea:hover
 .playercard, .buttoncard
 {
 	display: inline-block;
-	padding: 20px;
 	width: 300px;
+	height: 60px;
+	box-sizing: border-box;
 	border: 1px solid #ffc68f;
 	margin: 5px;
+	vertical-align: middle;
 }
 
 .playercard
 {
 	text-align: left;
+	padding: 5px;
 }
 
 .buttoncard
 {
 	text-align: center;
 	cursor: pointer;
+	padding: 20px;
 }
 
 .buttoncard:hover
@@ -688,14 +692,56 @@ input:focus, input:hover, textarea:focus, textarea:hover
 
 .playercard .playername
 {
+	display: inline-block;
 	font-weight: bold;
 	color: #ff6600;
+	margin: 15px;
 }
 
 .playercard .playertype
 {
+	display: inline-block;
 	float: right;
 	opacity: 0.5;
+	margin: 15px;
+}
+
+.playercard input
+{
+	width: calc(100% - 22px);
+	margin-top: 6px;
+}
+
+.dropdown
+{
+	position: absolute;
+	z-index: 10;
+	background: rgba(12,12,12,0.9);
+	border: 1px solid #ffc68f;
+	margin: 0px;
+	width: 288px;
+	border-top: 0px;
+	list-style: none;
+	padding: 0px;
+	box-sizing: border-box;
+}
+
+.dropdown li
+{
+	padding: 5px 16px;
+	cursor: pointer;
+}
+
+.dropdown li:hover
+{
+	background: #ffc68f;
+	color: #0c0c0c;
+}
+
+.playercard .playerschool
+{
+	opacity: 0.5;
+	float: right;
 }
 
 .break

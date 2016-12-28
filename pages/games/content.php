@@ -106,7 +106,7 @@ for ($i=0; $i<count($games); $i++)
 
 		if ($nplayer < $games_team[$i])
 		{
-			echo '<span class="buttoncard">Ajouter un joueur</span>';
+			echo '<span class="buttoncard" onclick="morphIntoTextField(this)()">Ajouter un joueur</span>';
 		}
 
 		echo '</p><br /><br /><br />';
