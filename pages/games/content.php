@@ -28,7 +28,6 @@ $games_logo = array(
 	"lol.png",
 	"csgo.png",
 	"hs.png");
-
 if (isset($_GET["game"]) AND $csrf_check)
 {
 	$form_game = intval($_GET["game"]);

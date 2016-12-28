@@ -171,9 +171,18 @@ if ($register_flag)
 
 	$hash = sha1($salt.$form_pass.CONFIG_SALT);
 
-	$database->req('INSERT INTO sgl_users (login, pass, salt, mail, activation, school, register) VALUES("'.addslashes($form_login).'", "'.$hash.'", "'.$salt.'", "'.addslashes($form_mail).'", "'.$activation.'", "'.addslashes($form_school).'", '.time().')');
+	$database->req('INSERT INTO sgl_users (login, pass, salt, mail, activation, school, register)
+		VALUES("'.addslashes($form_login).'", "'.$hash.'", "'.$salt.'", "'.addslashes($form_mail).'", "'.$activation.'", "'.addslashes($form_school).'", '.time().')');
 
-	// TODO : mail d'activation
+
+
+	$subject = "Confirmation d'inscription à la Student Gaming League";
+	$content = "Bienvenue à la Student Gaming League !\n\n
+Pour confirmer votre inscription, cliquez sur le lien suivant : <https://".SERVER_ADDR."/".SERVER_REP."/index.php?page=activation&noob=".strtolower($form_login)."&key=".$activation.">\n
+Vous pourrez ensuite créer ou rejoindre une équipe pour vos jeux préférés.\n\nL'équipe de la Student Gaming League 2017";
+
+	include_once("./class/Mail.class.php");
+	new Mail($form_mail, $subject, $content);
 ?>
 
 <div id="content">
@@ -187,7 +196,7 @@ if ($register_flag)
 				- Un joueur de la SGL 2016
 			</span>
 		</div>
-		<p>Et voilà, c'était pas si dur ! Plus qu'à aller cliquer sur le lien d'activation qu'on vient de vous envoyer par mail (à cette adresse si vous avez déjà oublié ce que vous aviez mis : <?=htmlspecialchars($form_mail)?>)</p>
+		<p>Et voilà, c'était pas si dur ! Plus qu'à aller cliquer sur le lien d'activation qu'on vient de vous envoyer (à cette adresse si vous avez déjà oublié ce que vous aviez mis : <?=htmlspecialchars($form_mail)?>).<br />PENSEZ A CHECKER VOS SPAMS !</p>
 		<br />
 	</div>
 </div>

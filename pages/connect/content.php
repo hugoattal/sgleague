@@ -15,7 +15,7 @@ if ((isset($_GET["disconnect"])) AND $csrf_check)
 			</span>
 			<span class="qauthor">
 				- Un joueur de la SGL 2016
-			<
+			</span>
 		</div>
 		<br />
 		<p style="text-align: center;"><a href="index.php" class="button">Revenir à la page d'accueil</a></p>
@@ -41,7 +41,7 @@ else if (isset($_GET["recover"]))
 				- Un joueur de la SGL 2016
 			</span>
 		</div>
-		<p>La prochaine fois, faites comme mundo pour ne plus oublier votre mot de passe ! Quoique le dire à voix haute n'est peut être pas une super idée...</p>
+		<p style="text-align: center;">La prochaine fois, faites comme mundo pour ne plus oublier votre mot de passe ! Quoique le dire à voix haute n'est peut être pas une super idée...</p>
 		<div class="form">
 			<form action="index.php?page=connect" method="post">
 				<table class="form_table">
@@ -75,7 +75,7 @@ else
 		$form_pass = isset($_POST['pass']) ? $_POST['pass'] : '';
 
 
-		$temp = $database->req('SELECT id, login, pass, salt, type FROM sgl_users WHERE LOWER(login)=LOWER("'.addslashes($form_login).'")');
+		$temp = $database->req('SELECT id, login, pass, salt, type FROM sgl_users WHERE LOWER(login)=LOWER("'.addslashes($form_login).'") AND activation=""');
 		$data = $temp->fetch();
 
 		$hash = sha1($data["salt"].$form_pass.CONFIG_SALT);
@@ -129,7 +129,7 @@ else
 				- Un joueur de la SGL 2016
 			</span>
 		</div>
-		<?=isset($_POST["sent"])?"<div class=\"error\" style=\"text-align:center;\"><i class=\"fa fa-exclamation-triangle\" aria-hidden=\"true\"></i>Hum... Vous êtes sûr que c'est le bon mot de passe ?</div>":""?>
+		<?=isset($_POST["sent"])?"<div class=\"error\" style=\"text-align:center;\"><i class=\"fa fa-exclamation-triangle\" aria-hidden=\"true\"></i>Hum... Vous êtes sûr que c'est le bon mot de passe ? Et que votre compte est activé ?</div>":""?>
 		<div class="form">
 			<form action="index.php?page=connect" method="post">
 				<table class="form_table">
