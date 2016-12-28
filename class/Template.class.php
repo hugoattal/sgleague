@@ -19,14 +19,15 @@ class Template
 		if (isset($need_connection) && (!isset($_SESSION["sgl_id"])))
 		{
 			$this->page = "home";
+
+			unset($page_head);
+			unset($page_script);
 		}
 
 		define("CURRENT_PAGE", $this->page);
 
 		include("./template/header.php");
-
 		include("./pages/".$this->page."/content.php");
-
 		include("./template/footer.php");
 	}
 }
