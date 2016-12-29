@@ -16,6 +16,7 @@ $database = new Database();
 $games = array(1, 2, 3, 4);
 
 $games_team = array(6, 5, 5, 1);
+$games_reps = array(2, 2, 2, 0);
 
 $games_name = array(
 	"Overwatch",
@@ -23,11 +24,11 @@ $games_name = array(
 	"Counter Strike",
 	"Hearthstone");
 
-$games_logo = array(
-	"ow.png",
-	"lol.png",
-	"csgo.png",
-	"hs.png");
+$games_short = array(
+	"ow",
+	"lol",
+	"csgo",
+	"hs");
 if (isset($_GET["game"]) AND $csrf_check)
 {
 	$form_game = intval($_GET["game"]);
@@ -36,6 +37,10 @@ if (isset($_GET["game"]) AND $csrf_check)
 		if (isset($_GET["del"]))
 		{
 			$database->req('DELETE FROM sgl_teams WHERE user="'.$_SESSION["sgl_id"].'" AND game="'.$form_game.'"');
+		}
+		else if(isset($_GET["accept"]))
+		{
+			$database->req('UPDATE sgl_teams SET register="'.time().'" WHERE user="'.$_SESSION["sgl_id"].'" AND game="'.$form_game.'" AND lead ="'.intval($_GET["accept"]).'"');
 		}
 		else
 		{
@@ -53,7 +58,7 @@ if (isset($_GET["game"]) AND $csrf_check)
 // TODO automated generation
 $games_in = array (1 => false, 2 => false, 3 => false, 4 => false);
 
-$temp = $database->req('SELECT game FROM sgl_teams WHERE user="'.$_SESSION["sgl_id"].'"');
+$temp = $database->req('SELECT game FROM sgl_teams WHERE user="'.$_SESSION["sgl_id"].'" AND register > 0');
 
 while($data = $temp->fetch())
 {
@@ -78,50 +83,130 @@ while($data = $temp->fetch())
 for ($i=0; $i<count($games); $i++)
 {
 
-	echo '<p><table class="line_table"><tr><td><hr class="line" /></td><td><img src="./style/img/games/'.$games_logo[$i].'" alt="'.$games_name[$i].'" /></td><td><hr class="line" /></td></tr></table></p>';
+	echo '<p id="'.$games_short[$i].'"><table class="line_table"><tr><td><hr class="line" /></td><td><img src="./style/img/games/'.$games_short[$i].'.png" alt="'.$games_name[$i].'" /></td><td><hr class="line" /></td></tr></table></p><br />';
 	
 // TODO check for leader invitation to accept / decline
 
 	if ($games_in[$games[$i]])
 	{
-		echo '<p style="text-align: center;" class="smallquote">Vous êtes inscrit à ce tournoi ! Plus qu\'à hard train jusqu\'à début Février...</p><br />';
+		echo '<p style="text-align:center;">Vous êtes inscrit à ce tournoi !</p>
+		<p style="text-align: center;" class="smallquote">Plus qu\'à hard train jusqu\'à début Février... [ <a href="index.php?page=games&amp;game='.$games[$i].'&amp;del=1">Se désinscrire du tournoi</a> ]</p><br />';
 
-		$temp = $database->req('SELECT sgl_users.login, sgl_teams.type
+		$temp = $database->req('SELECT sgl_users.login, sgl_teams.type, sgl_teams.register, sgl_teams.user
 			FROM sgl_users, sgl_teams LEFT JOIN sgl_teams AS my_team ON sgl_teams.lead = my_team.lead AND sgl_teams.game = my_team.game
-			WHERE my_team.user="'.$_SESSION["sgl_id"].'" AND my_team.game="'.$games[$i].'" AND sgl_teams.user = sgl_users.id');
+			WHERE my_team.user="'.$_SESSION["sgl_id"].'" AND my_team.game="'.$games[$i].'" AND sgl_teams.user = sgl_users.id ORDER BY type ASC');
 
 		$type = array("Aucun", "Leader", "Joueur", "Remplaçant");
 
 		$nplayer = 0;
+		$nreps = 0;
 
 // TODO check stand-by players
 
 		echo '<p style="text-align: center">';
 
+		$lasttype = 1;
+		$lead = false;
+
 		while($data = $temp->fetch())
 		{
-			$nplayer++;
-			echo '<span class="playercard"><span class="playername">'.htmlspecialchars($data["login"]).'</span><span class="playertype">('.$type[$data["type"]].')</span></span>';
+			if ($data["type"] == 1)
+			{
+				if ($_SESSION["sgl_id"] == $data["user"])
+				{
+					$lead = true;
+				}
+			}
+
+			if ($data["type"] != $lasttype)
+			{
+				if ($lasttype == 2)
+				{
+					for ($j=0; $j<($games_team[$i]-$nplayer); $j++)
+					{
+						if ($lead)
+						{
+							echo '<span class="buttoncard" onclick="morphIntoTextField(this, '.$games[$i].')()" data-type="2" data-game="'.$games[$i].'">Ajouter un joueur</span><br />';
+						}
+						else
+						{
+							echo '<span class="playercard"></span><br />';
+						}
+					}
+					echo "<br /><br/>";
+				}
+			}
+
+			if ($data["type"] < 3)
+			{
+				$nplayer++;
+			}
+			else if ($data["type"] == 3)
+			{
+				$nreps++;
+			}
+
+			if ($data["register"] == 0)
+			{
+				echo '<span class="playercard" style="opacity:0.5;"><span class="playername">'.htmlspecialchars($data["login"]).'</span><span class="playertype">('.$type[$data["type"]].')</span></span><br />';
+			}
+			else
+			{
+				echo '<span class="playercard"><span class="playername">'.htmlspecialchars($data["login"]).'</span><span class="playertype">('.$type[$data["type"]].')</span></span><br />';
+			}
+
+			$lasttype = $data["type"];
 		}
 
-		if ($nplayer < $games_team[$i])
+		if ($lasttype == 1)
 		{
-			echo '<span class="buttoncard" onclick="morphIntoTextField(this)()">Ajouter un joueur</span>';
+			for ($j=0; $j<($games_team[$i]-$nplayer); $j++)
+			{
+				if ($lead)
+				{
+					echo '<span class="buttoncard" onclick="morphIntoTextField(this, '.$games[$i].')()" data-type="2" data-game="'.$games[$i].'">Ajouter un joueur</span><br />';
+				}
+				else
+				{
+					echo '<span class="playercard"></span><br />';
+				}
+			}
+			echo "<br /><br />";
+			$lasttype = 2;
 		}
 
-		echo '</p><br /><br /><br />';
+		for ($j=0; $j<($games_reps[$i]-$nreps); $j++)
+		{
+			if ($lead)
+			{
+				echo '<span class="buttoncard" onclick="morphIntoTextField(this, '.$games[$i].')()" data-type="3" data-game="'.$games[$i].'">Ajouter un remplaçant</span><br />';
+			}
+			else
+			{
+				echo '<span class="playercard"></span><br />';
+			}
+		}
+
+		echo '</p>';
 
 // TODO confirm delete participation
 
-		echo '<p style="text-align: center;"><a href="index.php?page=games&amp;game='.$games[$i].'&amp;del=1" class="button">Se désinscire du tournoi</a></p>';
+		//echo '<p style="text-align: center;"><a href="" class="button">Mettre à jour les changements</a></p>';
 	}
 	else
 	{
 		if ($games_team[$i] > 1)
 		{
 			echo '<p style="text-align: center;" class="smallquote">Si vous souhaitez rejoindre une équipe, votre chef d\'équipe doit d\'abord vous inviter.</p><br /<br />';
+
+			$temp = $database->req('SELECT sgl_users.login, sgl_users.id FROM sgl_teams, sgl_users WHERE sgl_teams.user="'.$_SESSION["sgl_id"].'" AND sgl_teams.lead = sgl_users.id AND game="'.$games[$i].'" AND sgl_teams.register = 0');
+
+			while($data = $temp->fetch())
+			{
+				echo '<p style="text-align: center;"><a href="index.php?page=games&amp;game='.$games[$i].'&accept='.$data["id"].'" class="button">Accepter l\'invitation de '.htmlspecialchars($data["login"]).'</a></p><br />';
+			}
 		}
-		echo '<p style="text-align: center;"><a href="index.php?page=games&amp;game='.$games[$i].'" class="button">S\'inscire au tournoi</a></p>';
+		echo '<p style="text-align: center;"><a href="index.php?page=games&amp;game='.$games[$i].'" class="button">S\'inscrire au tournoi</a></p>';
 	}
 	
 	echo '<br /><br /><br /><br />';

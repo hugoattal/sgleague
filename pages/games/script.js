@@ -28,11 +28,12 @@ function doRequest(url, options={}) {
 }
 
 
-function getAutocompletionForPseudo(pseudo) {
+function getAutocompletionForPseudo(pseudo, game) {
 	return doRequest('api.php', {
 		queryParams: {
 			'type': 'search',
-			'data': pseudo
+			'data': pseudo,
+			'game': game
 		}
 	})
 	.then(response => response.json())
@@ -52,7 +53,7 @@ function debounce(func, wait=0, immediate=false) {
 }
 
 
-function createPlayerNode(parentNode, id, name, role="Membre")
+function createPlayerNode(parentNode, id, name, role="Joueur")
 {
 	const index = getIndexOfMember(parentNode);
 	const playerCard = parentNode;
@@ -75,16 +76,9 @@ function createPlayerNode(parentNode, id, name, role="Membre")
 	playerCard.appendChild(playerType);
 	playerCard.appendChild(hiddenInput);
 
-	return playerCard;	
-}
+	d3.select(parentNode).style("opacity", "0.5");
 
-function createButtonNode(parentNode)
-{
-	d3.select(parentNode.parentNode)
-		.append("span")
-		.classed("buttoncard", true)
-		.attr("onclick", "morphIntoTextField(this)()")
-		.text("Ajouter un joueur");
+	return playerCard;	
 }
 
 function buildPrettyTextNode(login, school) {
@@ -116,16 +110,25 @@ function getIndexOfMember(textInput) {
 	return 0;
 }
 
-function addPlayer(textInput, getPlayerName, parentNode) {
+function addPlayer(textInput, player, parentNode) {
 	return function () {
-		const playerName = getPlayerName();
+		const playerName = player.login;
 
 		if (GLOBALS.existingPlayers.includes(playerName) && !getCurrentPlayersInTeam(parentNode).includes(playerName)) {
 			console.log('Adding %s to the team.', playerName);
-			createPlayerNode(parentNode, GLOBALS.mapPlayers[playerName].id, playerName);
-			createButtonNode(parentNode);
+			var playerType = {2:"Joueur", 3:"Remplaçant"};
+			createPlayerNode(parentNode, GLOBALS.mapPlayers[playerName].id, playerName, playerType[parentNode.dataset.type]);
 			parentNode.removeChild(textInput);
 			textInput = null;
+
+			doRequest('api.php', {
+				queryParams: {
+					'type': 'team_add',
+					'player': player.id,
+					'game': parentNode.dataset.game,
+					'ptype': parentNode.dataset.type
+				}
+			});
 
 			setTimeout(() => {
 				parentNode.removeChild(GLOBALS.currentDropdownSuggestionNode);
@@ -137,50 +140,74 @@ function addPlayer(textInput, getPlayerName, parentNode) {
 	}
 }
 
-function selectCurrentSuggestion(player, textInput) {
+function selectCurrentSuggestion(player, textInput)
+{
 	return evt => {
-		addPlayer(textInput, () => player.login, textInput.parentNode)();
+		console.log(player);
+		addPlayer(textInput, player, textInput.parentNode)();
 	}
 }
 
-function getCurrentPlayersInTeam(teamNode) {
+function getCurrentPlayersInTeam(teamNode)
+{
 	return Array.from(teamNode.getElementsByClassName('playercard')).map(child => child.firstChild.firstChild.data);
 }
 
-function createOrChangeCurrentSuggestions(parentNode, textInput, currentContent, players) {
+function createOrChangeCurrentSuggestions(parentNode, textInput, currentContent, players)
+{
 	const container = GLOBALS.currentDropdownSuggestionNode || document.createElement('ul');
 	d3.select(container).classed("dropdown", true);
 	const addedPlayers = getCurrentPlayersInTeam(parentNode);
-	console.log(addedPlayers);
+	//console.log(addedPlayers);
 
 	const nodes = players ? players.filter(player => !addedPlayers.includes(player.login)).map(player => {
 		const node = document.createElement('li');
 		node.setAttribute('data-id', player.id);
 		node.appendChild(buildPrettyTextNode(player.login, player.school));
-		node.onclick = selectCurrentSuggestion(player, textInput);
+		node.onmousedown = selectCurrentSuggestion(player, textInput);
 		return node
 	}) : [];
 
 	// Inject to parent.
 	// Reset the HTML.
 	container.innerHTML = "";
-	if (currentContent !== "") {
-		for (let i = 0 ; i < nodes.length ; i++) {
-			container.appendChild(nodes[i]);	
+	if (currentContent !== "")
+	{
+		for (let i = 0 ; i < nodes.length ; i++)
+		{
+			container.appendChild(nodes[i]);
+		}
+
+		if (nodes.length == 0)
+		{
+			d3.select(container)
+				.append("li")
+				.append("div")
+				.append("span")
+				.text("Aucun joueur trouvé...");
 		}
 	}
+	else
+	{
+		d3.select(container)
+				.append("li")
+				.append("div")
+				.append("span")
+				.text("Commencez à taper un pseudo ou un mail");
+	}
 
-	if (!GLOBALS.currentDropdownSuggestionNode) {
+	if (!GLOBALS.currentDropdownSuggestionNode)
+	{
 		parentNode.insertBefore(container, textInput.nextSibling);
 	}
 
 	GLOBALS.currentDropdownSuggestionNode = container;
 }
 
-function fillAutocompletion(getTextContent, parentNode, textInput) {
+function fillAutocompletion(getTextContent, game, parentNode, textInput) {
 	return function ()
 	{
-		getAutocompletionForPseudo(getTextContent()).then(players => {
+		getAutocompletionForPseudo(getTextContent(), game).then(players => {
 			const playersNames = players.map(player => player.login);
 
 			for (let index = 0; index < players.length ; index++) {
@@ -195,18 +222,7 @@ function fillAutocompletion(getTextContent, parentNode, textInput) {
 	}
 }
 
-
-function handleControlForText(addPlayer, cancelAndRemove) {
-	return evt => {
-		if (evt.key === "Enter") {
-			addPlayer();
-		} else if (evt.key === "Escape") {
-			cancelAndRemove();
-		}
-	}
-}
-
-function morphIntoTextField(element)
+function morphIntoTextField(element, game)
 {
 	return function (evt)
 	{
@@ -217,15 +233,22 @@ function morphIntoTextField(element)
 			.html("")
 			.append("input")
 			.attr("placeholder", "Joueur")
+			.attr("onblur", "cancelAndRemove(this)")
 			.node();
 
 		textInput.focus();
 
-		getText = () => textInput.value
+		getText = () => textInput.value;
 
-		autocomplete = debounce(fillAutocompletion(getText, textInput.parentNode, textInput), 300);
+		autocomplete = debounce(fillAutocompletion(getText, game, textInput.parentNode, textInput), 300);
 
 		textInput.addEventListener('keydown', autocomplete);
-		textInput.addEventListener('keypress', handleControlForText(addPlayer(textInput, getText, textInput.parentNode), () => parentNode.removeChild(textInput)));
+		textInput.addEventListener('focus', autocomplete);
 	}
+}
+
+function cancelAndRemove(element)
+{
+	element.parentNode.removeChild(d3.selectAll(".dropdown")[0][0]);
+	GLOBALS.currentDropdownSuggestionNode = null;
 }

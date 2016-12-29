@@ -663,7 +663,7 @@ input:focus, input:hover, textarea:focus, textarea:hover
 .playercard, .buttoncard
 {
 	display: inline-block;
-	width: 300px;
+	width: 500px;
 	height: 60px;
 	box-sizing: border-box;
 	border: 1px solid #ffc68f;
@@ -719,7 +719,7 @@ input:focus, input:hover, textarea:focus, textarea:hover
 	background: rgba(12,12,12,0.9);
 	border: 1px solid #ffc68f;
 	margin: 0px;
-	width: 288px;
+	width: 488px;
 	border-top: 0px;
 	list-style: none;
 	padding: 0px;
