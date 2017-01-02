@@ -40,7 +40,12 @@ if (isset($_GET["game"]) AND $csrf_check)
 		}
 		else if(isset($_GET["accept"]))
 		{
-			$database->req('UPDATE sgl_teams SET register="'.time().'" WHERE user="'.$_SESSION["sgl_id"].'" AND game="'.$form_game.'" AND lead ="'.intval($_GET["accept"]).'"');
+			$database->req('UPDATE sgl_teams SET register = "'.time().'" WHERE user = "'.$_SESSION["sgl_id"].'" AND game = "'.$form_game.'" AND lead = "'.intval($_GET["accept"]).'"');
+			$database->req('DELETE FROM sgl_teams WHERE user = "'.$_SESSION["sgl_id"].'" AND game="'.$form_game.'" AND register = "0"');
+		}
+		else if(isset($_GET["remove"]))
+		{
+			$database->req('DELETE FROM sgl_teams WHERE user = "'.intval($_GET["remove"]).'" AND game="'.$form_game.'" AND lead = "'.$_SESSION["sgl_id"].'"');
 		}
 		else
 		{
@@ -146,19 +151,28 @@ for ($i=0; $i<count($games); $i++)
 				$nreps++;
 			}
 
-			if ($data["register"] == 0)
+			if ($lead && ($_SESSION["sgl_id"] != $data["user"]))
 			{
-				echo '<span class="playercard" style="opacity:0.5;"><span class="playername">'.htmlspecialchars($data["login"]).'</span><span class="playertype">('.$type[$data["type"]].')</span></span><br />';
+				$dlstr = '<span class="cardoption"><a href="index.php?page=games&amp;game='.$games[$i].'&remove='.$data["user"].'"><i class="fa fa-times" aria-hidden="true"></i></a></span>';
 			}
 			else
 			{
-				echo '<span class="playercard"><span class="playername">'.htmlspecialchars($data["login"]).'</span><span class="playertype">('.$type[$data["type"]].')</span></span><br />';
+				$dlstr = '';
+			}
+
+			if ($data["register"] == 0)
+			{
+				echo '<span class="playercard" style="opacity:0.5;"><span class="playername">'.htmlspecialchars($data["login"]).'</span><span class="playertype">('.$type[$data["type"]].')</span>'.$dlstr.'</span><br />';
+			}
+			else
+			{
+				echo '<span class="playercard"><span class="playername">'.htmlspecialchars($data["login"]).'</span><span class="playertype">('.$type[$data["type"]].')</span>'.$dlstr.'</span><br />';
 			}
 
 			$lasttype = $data["type"];
 		}
 
-		if ($lasttype == 1)
+		if ($lasttype <= 2)
 		{
 			for ($j=0; $j<($games_team[$i]-$nplayer); $j++)
 			{

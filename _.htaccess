@@ -1,0 +1,9 @@
+<FilesMatch "\.(jpe?g|png|gif|js|css)$">
+	Header unset Cache-Control
+	Header unset Pragma
+	Header set Cache-Control "max-age=604800, public"
+	ExpiresActive On
+	ExpiresDefault "access plus 1 week"
+</FilesMatch>
+
+#To do : Gzip compression

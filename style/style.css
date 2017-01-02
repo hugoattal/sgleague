@@ -567,7 +567,7 @@ body
 
 .line_table td:nth-of-type(2)
 {
-	width: 0px;
+	width: 1px;
 	white-space: nowrap;
 	padding: 0px 20px;
 }
@@ -669,6 +669,7 @@ input:focus, input:hover, textarea:focus, textarea:hover
 	border: 1px solid #ffc68f;
 	margin: 5px;
 	vertical-align: middle;
+	position: relative;
 }
 
 .playercard
@@ -710,6 +711,13 @@ input:focus, input:hover, textarea:focus, textarea:hover
 {
 	width: calc(100% - 22px);
 	margin-top: 6px;
+}
+
+.cardoption
+{
+	position: absolute;
+	top: 0px;
+	right: 5px;
 }
 
 .dropdown
