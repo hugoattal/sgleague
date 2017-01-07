@@ -36,6 +36,9 @@ $games_quote = array(
 	"Rush B my friend ! Don't stop, don't stop...",
 	"You face Jaraxxus,<br />eredar lord of the burning legion !");
 
+$check_teamtag = 0;
+$error_teamtag = "";
+
 if (isset($_GET["game"]) AND $csrf_check)
 {
 	$form_game = intval($_GET["game"]);
@@ -62,6 +65,33 @@ if (isset($_GET["game"]) AND $csrf_check)
 			if ($data["exist"] == 0)
 			{
 				$database->req('INSERT INTO sgl_teams (user, game, lead, type, register) VALUES("'.$_SESSION["sgl_id"].'", "'.$form_game.'", "'.$_SESSION["sgl_id"].'", 1, '.time().')');
+			}
+		}
+
+		if (isset($_POST["sent"]))
+		{
+			$form_teamtag = isset($_POST['teamtag']) ? $_POST['teamtag'] : '';
+			$form_teamname = isset($_POST['teamname']) ? $_POST['teamname'] : '';
+
+			if (strlen($form_teamtag) != 0)
+			{
+				if (!preg_match("/^[A-Za-z0-9]{3,4}$/", $form_teamtag))
+				{
+					$check_teamtag = -1;
+					$error_teamtag = "Hep ! Seulement 3 ou 4 caractères, et seulement des lettres et des chiffres !";
+					$form_teamtag = '';
+				}
+			}
+
+			$database->req('UPDATE sgl_teams SET tag="'.addslashes($form_teamtag).'", name="'.addslashes($form_teamname).'"
+				WHERE user="'.$_SESSION["sgl_id"].'" AND lead="'.$_SESSION["sgl_id"].'" AND game="'.$form_game.'"');
+
+
+			// TODO : check if teamtag alreay exist
+
+			if ($check_teamtag < 0)
+			{
+				$error_teamtag = "<div class=\"error\"><i class=\"fa fa-exclamation-triangle\" aria-hidden=\"true\"></i>".$error_teamtag."</div>";
 			}
 		}
 	}
@@ -140,7 +170,7 @@ for ($i=0; $i<count($games); $i++)
 		echo '<p style="text-align:center;">Vous êtes inscrit à ce tournoi !</p>
 		<p style="text-align: center;" class="smallquote">Plus qu\'à hard train jusqu\'à début Février... [ <a href="index.php?page=games'.$url_game.'&amp;game='.$games[$i].'&amp;del=1">Se désinscrire du tournoi</a> ]</p><br />';
 
-		$temp = $database->req('SELECT sgl_users.login, sgl_teams.type, sgl_teams.register, sgl_teams.user
+		$temp = $database->req('SELECT sgl_users.login, sgl_users.mail, sgl_teams.type, sgl_teams.register, sgl_teams.user, sgl_teams.name, sgl_teams.tag
 			FROM sgl_users, sgl_teams LEFT JOIN sgl_teams AS my_team ON sgl_teams.lead = my_team.lead AND sgl_teams.game = my_team.game
 			WHERE my_team.user="'.$_SESSION["sgl_id"].'" AND my_team.game="'.$games[$i].'" AND sgl_teams.user = sgl_users.id ORDER BY type ASC');
 
@@ -164,19 +194,24 @@ for ($i=0; $i<count($games); $i++)
 
 					if ($games_team[$i] > 1)
 					{
-						echo '<div class="form"><form action="index.php?page=games'.$url_game.'" method="post">
+						echo '<div class="form"><form action="index.php?page=games'.$url_game.'&amp;game='.$games[$i].'" method="post">
 						<table class="form_table">
-							<tr><td><h3>Nom d\'équipe :</h3></td><td><input name="team_name" type="text"><br /><div class="smallquote">Le nom de votre équipe, genre "Télécom Bretagne Gaming"</div></td></tr>
-							<tr><td><h3>TAG d\'équipe :</h3></td><td><input name="team_name" type="text"><br /><div class="smallquote">Votre tag en 3 ou 4 caractères, genre "TBG" ou "TBG2" (que des lettres et des chiffres par contre !)</div></td></tr>
-						</table><br /><br /><button type="submit" value="Submit">Mettre à jour</button>
+							<tr><td><h3>Nom d\'équipe :</h3></td><td><input value="'.htmlspecialchars($data["name"]).'" name="teamname" type="text"><br />
+							<div class="smallquote">Le nom de votre équipe, genre "Télécom Bretagne Gaming"</div></td></tr>
+							<tr><td><h3>TAG d\'équipe :</h3></td><td><input value="'.htmlspecialchars($data["tag"]).'" name="teamtag" type="text"><br />
+							'.$error_teamtag.'
+							<div class="smallquote">Votre tag en 3 ou 4 caractères, genre "TBG" ou "TBG2" (que des lettres et des chiffres par contre !)</div></td></tr>
+						</table><br /><br />
+						<input type="hidden" name="sent" value="sent">
+						<button type="submit" value="Submit">Mettre à jour</button>
 						</form></div><br /><br /><br />';
 
 						echo '<p id="'.$games_short[$i].'"><table class="line_table"><tr><td><hr class="line" /></td><td>Votre équipe</td><td><hr class="line" /></td></tr></table></p><br />';
 					}
-					else
-					{
-						// TODO : display team name & tag
-					}
+				}
+				else
+				{
+					// TODO : display team name & tag
 				}
 			}
 
@@ -219,7 +254,7 @@ for ($i=0; $i<count($games); $i++)
 
 			if ($data["register"] == 0)
 			{
-				echo '<span class="playercard" style="opacity:0.5;"><span class="playername">'.htmlspecialchars($data["login"]).'</span><span class="playertype">('.$type[$data["type"]].')</span>'.$dlstr.'</span><br />';
+				echo '<span class="playercard" style="opacity:0.5;"><span class="playername">'.htmlspecialchars(($data["login"] == "")?$data["mail"]:$data["login"]).'</span><span class="playertype">('.$type[$data["type"]].')</span>'.$dlstr.'</span><br />';
 			}
 			else
 			{

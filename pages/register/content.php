@@ -8,6 +8,8 @@ $error_captcha = '';
 
 $register_flag = false;
 
+$form_mail = isset($_GET['mail']) ? $_GET['mail'] : '';
+
 if (isset($_POST["sent"]))
 {
 	include_once("./generic/recaptcha.php");
@@ -26,6 +28,7 @@ if (isset($_POST["sent"]))
 	$form_login = isset($_POST['login']) ? $_POST['login'] : '';
 	$form_pass = isset($_POST['pass']) ? $_POST['pass'] : '';
 	$form_mail = isset($_POST['mail']) ? $_POST['mail'] : '';
+
 	$form_school = isset($_POST['school']) ? $_POST['school'] : '';
 	$form_captcha = isset($_POST['g-recaptcha-response']) ? $_POST['g-recaptcha-response'] : '';
 
@@ -104,7 +107,7 @@ if (isset($_POST["sent"]))
 	{
 		if (filter_var($form_mail, FILTER_VALIDATE_EMAIL) == true)
 		{
-			$temp = $database->req('SELECT COUNT(*) as exist FROM sgl_users WHERE mail="'.addslashes($form_mail).'"');
+			$temp = $database->req('SELECT COUNT(*) as exist FROM sgl_users WHERE mail="'.addslashes($form_mail).'" AND activation=""');
 			$data = $temp->fetch();
 
 			if ($data["exist"] != 0)
@@ -171,14 +174,28 @@ if ($register_flag)
 
 	$hash = sha1($salt.$form_pass.CONFIG_SALT);
 
-	$database->req('INSERT INTO sgl_users (login, pass, salt, mail, activation, school, register)
-		VALUES("'.addslashes($form_login).'", "'.$hash.'", "'.$salt.'", "'.addslashes($form_mail).'", "'.$activation.'", "'.addslashes($form_school).'", '.time().')');
+	$temp = $database->req('SELECT COUNT(*) as existuser FROM sgl_users WHERE mail="'.addslashes($form_mail).'"');
+	$data = $temp->fetch();
 
+	if ($data["existuser"] > 0)
+	{
+		$temp = $database->req('SELECT id FROM sgl_users WHERE mail="'.addslashes($form_mail).'"');
+		$data = $temp->fetch();
 
+		$database->req('UPDATE sgl_users SET login = "'.addslashes($form_login).'", pass = "'.$hash.'", salt = "'.$salt.'", mail = "'.addslashes($form_mail).'",
+			activation = "'.$activation.'", school = "'.addslashes($form_school).'", register = '.time().' WHERE id = '.$data["id"]);
+	}
+	else
+	{
+		$database->req('INSERT INTO sgl_users (login, pass, salt, mail, activation, school, register)
+			VALUES("'.addslashes($form_login).'", "'.$hash.'", "'.$salt.'", "'.addslashes($form_mail).'", "'.$activation.'", "'.addslashes($form_school).'", '.time().')');
+	}
+
+	
 
 	$subject = "Confirmation d'inscription à la Student Gaming League";
 	$content = "Bienvenue à la Student Gaming League !\n\n
-Pour confirmer votre inscription, cliquez sur le lien suivant : <https://".SERVER_ADDR."/".SERVER_REP."/index.php?page=activation&noob=".strtolower($form_login)."&key=".$activation.">\n
+Pour confirmer votre inscription, cliquez sur le lien suivant : <https://".SERVER_ADDR."/".SERVER_REP."/index.php?page=activation&mvp=".strtolower($form_login)."&key=".$activation.">\n
 Vous pourrez ensuite créer ou rejoindre une équipe pour vos jeux préférés.\n\nL'équipe de la Student Gaming League 2017";
 
 	include_once("./class/Mail.class.php");

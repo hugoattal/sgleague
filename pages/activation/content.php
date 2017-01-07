@@ -3,7 +3,7 @@
 $check_data = 1;
 $error_data = '';
 
-if ((isset($_GET["key"])) AND (isset($_GET["noob"])))
+if ((isset($_GET["key"])) AND (isset($_GET["mvp"])))
 {
 	if ((!(preg_match("/[^A-Za-z0-9\!\?\.\-\#_]/", $_GET["key"]))) && (strlen($_GET["key"]) == 20))
 	{
@@ -11,12 +11,12 @@ if ((isset($_GET["key"])) AND (isset($_GET["noob"])))
 
 		$database = new Database();
 
-		$temp = $database->req('SELECT id, activation, mail FROM sgl_users WHERE login="'.addslashes($_GET["noob"]).'"');
+		$temp = $database->req('SELECT id, activation, mail FROM sgl_users WHERE login="'.addslashes($_GET["mvp"]).'"');
 		$data = $temp->fetch();
 
 		if ($data["activation"] == $_GET["key"])
 		{
-			$database->req('UPDATE sgl_users SET activation="", activemail="'.addslashes($data["mail"]).'" WHERE id="'.$data["id"].'"');
+			$database->req('UPDATE sgl_users SET activation="", activmail="'.addslashes($data["mail"]).'" WHERE id="'.$data["id"].'"');
 		}
 		else
 		{

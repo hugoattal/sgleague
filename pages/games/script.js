@@ -160,6 +160,11 @@ function getCurrentPlayersInTeam(teamNode)
 	return Array.from(teamNode.getElementsByClassName('playercard')).map(child => child.firstChild.firstChild.data);
 }
 
+function validateMail(email) {
+    var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    return re.test(email);
+}
+
 function createOrChangeCurrentSuggestions(parentNode, textInput, currentContent, players)
 {
 	const container = GLOBALS.currentDropdownSuggestionNode || document.createElement('ul');
@@ -187,11 +192,29 @@ function createOrChangeCurrentSuggestions(parentNode, textInput, currentContent,
 
 		if (nodes.length == 0)
 		{
-			d3.select(container)
-				.append("li")
-				.append("div")
-				.append("span")
-				.text("Aucun joueur trouvé...");
+			if (validateMail(textInput.value))
+			{
+				d3.select(container)
+					.append("li")
+					.on("mousedown", function(){
+						sendMail(textInput.value, parentNode);
+						var playerType = {2:"Joueur", 3:"Remplaçant"};
+						createPlayerNode(parentNode, 0, textInput.value, playerType[parentNode.dataset.type]);
+						parentNode.removeChild(textInput);
+						parentNode.removeChild(container);
+					})
+					.append("div")
+					.append("span")
+					.text("Envoyer une invitation par mail ?");
+			}
+			else
+			{
+				d3.select(container)
+					.append("li")
+					.append("div")
+					.append("span")
+					.text("Aucun joueur trouvé... Mais vous pouvez l'inviter en tapant son mail !");
+			}
 		}
 	}
 	else
@@ -258,4 +281,18 @@ function cancelAndRemove(element)
 {
 	element.parentNode.removeChild(d3.selectAll(".dropdown")[0][0]);
 	GLOBALS.currentDropdownSuggestionNode = null;
+}
+
+function sendMail(mail, parentNode)
+{
+	console.log(mail);
+
+	doRequest('api.php', {
+		queryParams: {
+			'type': 'mail_add',
+			'player': mail,
+			'game': parentNode.dataset.game,
+			'ptype': parentNode.dataset.type
+		}
+	});
 }
