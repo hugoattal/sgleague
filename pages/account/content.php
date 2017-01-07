@@ -4,8 +4,48 @@ include_once("./class/Database.class.php");
 
 $database = new Database();
 
+$check_steamid = 0;
+$error_steamid = '';
+
+$check_btag = 0;
+$error_btag = '';
+
 if (isset($_POST["sent"]))
 {
+	$form_steamid =	isset($_POST['steamid']) ?	$_POST['steamid'] : '';
+	$form_btag =	isset($_POST['btag']) ?		$_POST['btag'] : '';
+	$form_smnr =	isset($_POST['summoner']) ?	$_POST['summoner'] : '';
+
+	if (strlen($form_steamid) != 0)
+	{
+		if (!preg_match("/^STEAM_[0-5]:[0-1]:[0-9]+$/", $form_steamid))
+		{
+			$check_steamid = -1;
+			$error_steamid = "Attention, ça doit être un truc du style STEAM_0:1:11539914.";
+			$form_steamid = '';
+		}
+	}
+
+	if ($check_steamid < 0)
+	{
+		$error_steamid = "<div class=\"error\"><i class=\"fa fa-exclamation-triangle\" aria-hidden=\"true\"></i>".$error_steamid."</div>";
+	}
+
+	if (strlen($form_btag) != 0)
+	{
+		if (!preg_match("/#[0-9]{4}$/", $form_btag))
+		{
+			$check_btag = -1;
+			$error_btag = "Attention, vous avez pas oubliez la partie après le '#' par hasard ?";
+			$form_btag = '';
+		}
+	}
+
+	if ($check_btag < 0)
+	{
+		$error_btag = "<div class=\"error\"><i class=\"fa fa-exclamation-triangle\" aria-hidden=\"true\"></i>".$error_btag."</div>";
+	}
+	
 	$form_mail =	isset($_POST['mail']) ?		$_POST['mail'] : '';
 	$form_school =	isset($_POST['school']) ?	$_POST['school'] : '';
 	$form_first =	isset($_POST['first']) ?	$_POST['first'] : '';
@@ -19,10 +59,16 @@ if (isset($_POST["sent"]))
 	$form_gender = in_array($form_gender, array(0,1,2,3))?$form_gender:0;
 
 	$database->req('UPDATE sgl_users SET school="'.addslashes($form_school).'", gender="'.$form_gender.'", first="'.addslashes($form_first).'", name="'.addslashes($form_name).'",
-		birth="'.mktime(0, 0, 0, intval($form_bmonth), intval($form_bday), intval($form_byear)).'" WHERE id='.$_SESSION["sgl_id"]);
+		birth="'.mktime(0, 0, 0, intval($form_bmonth), intval($form_bday), intval($form_byear)).'",
+		steamid="'.addslashes($form_steamid).'", battletag="'.addslashes($form_btag).'", summoner="'.addslashes($form_smnr).'" WHERE id='.$_SESSION["sgl_id"]);
+
+	$form_oldpass =	isset($_POST['oldpass']) ?	$_POST['oldpass'] : '';
+	$form_newpass =	isset($_POST['newpass']) ?	$_POST['newpass'] : '';
+
+	// TODO : change password
 }
 
-$temp = $database->req('SELECT login, mail, school, first, name, gender, birth FROM sgl_users WHERE id='.$_SESSION["sgl_id"]);
+$temp = $database->req('SELECT login, mail, steamid, battletag, summoner, school, first, name, gender, birth FROM sgl_users WHERE id='.$_SESSION["sgl_id"]);
 $data = $temp->fetch();
 
 $birth_day = intval(date('d', $data["birth"]));
@@ -49,13 +95,27 @@ $birth_year = intval(date('Y', $data["birth"]));
 					<tr><td><h3>Pseudo :</h3></td><td><input type="text" name="login" value="<?=htmlspecialchars($data["login"])?>" disabled="disabled" /><br />
 					<div class="smallquote">Non, c'est même pas la peine d'essayer de le changer.</div></td></tr>
 				</table>
+
 				<p><table class="line_table"><tr><td><hr class="line" /></td><td>Modification du mot de passe</td><td><hr class="line" /></td></tr></table></p>
 				<table class="form_table">
-					<tr><td><h3>Ancien :</h3></td><td><input type="password" name="pass" /><br />
+					<tr><td><h3>Ancien :</h3></td><td><input type="password" name="oldpass" /><br />
 					<div class="smallquote">Juste pour être sûr que c'est bien vous et pas votre copine qui essaie de vous empecher de venir jouer.</div></td></tr>
-					<tr><td><h3>Nouveau :</h3></td><td><input type="password" name="pass" /><br />
+					<tr><td><h3>Nouveau :</h3></td><td><input type="password" name="newpass" /><br />
 					<div class="smallquote">On va dire au moins 8 caractères chiffres + lettres. 100% incraquable par la NSA.</div></td></tr>
 				</table>
+
+				<p><table class="line_table"><tr><td><hr class="line" /></td><td>Comptes de jeux</td><td><hr class="line" /></td></tr></table></p>
+				<table class="form_table">
+					<tr><td><h3>Steam ID :</h3></td><td><input type="text" name="steamid" value="<?=htmlspecialchars($data["steamid"])?>" /><br />
+					<?=$error_steamid?>
+					<div class="smallquote">Votre Steam ID pour Counter Strike (ex : STEAM_0:1:11539914). Pour vous aider : <a target="_blank" href="http://steamidfinder.com/">SteamIDFinder.com</a></div></td></tr>
+					<tr><td><h3>BattleTag :</h3></td><td><input type="text" name="btag" value="<?=htmlspecialchars($data["battletag"])?>" /><br />
+					<?=$error_btag?>
+					<div class="smallquote">Votre BattleTag pour Hearthstone et Overwatch. On oublie pas la partie après le "#" !</div></td></tr>
+					<tr><td><h3>Invocateur :</h3></td><td><input type="text" name="summoner" value="<?=htmlspecialchars($data["summoner"])?>" /><br />
+					<div class="smallquote">Votre nom d'invocateur pour League of Legends.</div></td></tr>
+				</table>
+
 				<p><table class="line_table"><tr><td><hr class="line" /></td><td>Informations personnelles</td><td><hr class="line" /></td></tr></table></p>
 				<table class="form_table">
 					<tr><td><h3>Mail :</h3></td><td><input type="mail" name="mail" value="<?=htmlspecialchars($data["mail"])?>"/><br />
