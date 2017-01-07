@@ -8,7 +8,7 @@
 if (isset($_SESSION["sgl_id"]))
 {
 ?>
-			<a href="index.php?page=games">Choisir un jeu</a>
+			<a href="javascript:void(0)" onclick="lightGames()">Choisir un jeu</a>
 <?php
 }
 else

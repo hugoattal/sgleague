@@ -29,6 +29,13 @@ $games_short = array(
 	"lol",
 	"csgo",
 	"hs");
+
+$games_quote = array(
+	"Ryu ga waga teki wo kurau ! Nooooo...",
+	"Captain Teemo on duty !",
+	"Rush B my friend ! Don't stop, don't stop...",
+	"You face Jaraxxus,<br />eredar lord of the burning legion !");
+
 if (isset($_GET["game"]) AND $csrf_check)
 {
 	$form_game = intval($_GET["game"]);
@@ -73,11 +80,39 @@ while($data = $temp->fetch())
 ?>
 
 <div id="content">
+
+<?php
+$single = false;
+$get_game = 0;
+
+if (isset($_GET["gpage"]))
+{
+	$get_game = intval($_GET["gpage"]);
+	if (in_array($get_game, $games))
+	{
+		$single = true;
+
+		echo '<div class="top_ban" style="background-image: url(\'./style/img/ban/top_'.$games_short[$get_game-1].'.png\');"></div>';
+	}
+}
+
+?>
 	<div class="container">
 		<h1><i class="fa fa-angle-right" aria-hidden="true"></i> Jeux</h1>
 		<div class="quote">
 			<span class="qcontent">
-				<i>&ldquo;</i>Keep calm and blame it on the lag<i>&rdquo;</i>
+				<i>&ldquo;</i>
+<?php
+if ($single)
+{
+	echo $games_quote[$get_game-1];
+}
+else
+{
+	echo 'Keep calm and blame it on the lag';
+}
+?>
+				<i>&rdquo;</i>
 			</span>
 			<span class="qauthor">
 				- Un joueur de la SGL 2016
@@ -91,15 +126,11 @@ $url_game = "";
 for ($i=0; $i<count($games); $i++)
 {
 
-	if (isset($_GET["gpage"]))
+	if ($single)
 	{
-		$get_game = intval($_GET["gpage"]);
-		if (in_array($get_game, $games))
-		{
-			$i = $get_game-1;
-			$break_flag = true;
-			$url_game = "&amp;gpage=".$get_game;
-		}
+		$i = $get_game-1;
+		$break_flag = true;
+		$url_game = "&amp;gpage=".$get_game;
 	}
 
 	echo '<p id="'.$games_short[$i].'"><table class="line_table"><tr><td><hr class="line" /></td><td><img src="./style/img/games/'.$games_short[$i].'.png" alt="'.$games_name[$i].'" /></td><td><hr class="line" /></td></tr></table></p><br />';
@@ -139,6 +170,8 @@ for ($i=0; $i<count($games); $i++)
 							<tr><td><h3>TAG d\'équipe :</h3></td><td><input name="team_name" type="text"><br /><div class="smallquote">Votre tag en 3 ou 4 caractères, genre "TBG" ou "TBG2" (que des lettres et des chiffres par contre !)</div></td></tr>
 						</table><br /><br /><button type="submit" value="Submit">Mettre à jour</button>
 						</form></div><br /><br /><br />';
+
+						echo '<p id="'.$games_short[$i].'"><table class="line_table"><tr><td><hr class="line" /></td><td>Votre équipe</td><td><hr class="line" /></td></tr></table></p><br />';
 					}
 					else
 					{

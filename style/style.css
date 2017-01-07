@@ -16,6 +16,7 @@ body
 	background-size: contain;
 	background-repeat: no-repeat;
 	background-color: #111111;
+	position: relative;
 }
 
 .page
@@ -342,9 +343,24 @@ body
 	text-shadow: 0px 1px 0px #833400, 0px 2px 0px #833400, 0px 3px 0px #833400, 0px 0px 100px #ff6600, 0px 0px 200px #ff6600;
 }
 
+.darkbg
+{
+	position: absolute;
+	top: 0px;
+	right: 0px;
+	bottom: 0px;
+	left: 0px;
+	background-color: #111111;
+	opacity: 0;
+	z-index: 100;
+	transition: all .5s ease-in-out;
+}
+
 #games
 {
 	border-collapse: collapse;
+	position: relative;
+	z-index: 200;
 }
 
 #games tr td
@@ -476,6 +492,12 @@ body
 {
 	font-weight: inherit;
 	color: #ff6600;
+}
+
+.top_ban
+{
+	width: 100%;
+	height: 200px;
 }
 
 .quote
