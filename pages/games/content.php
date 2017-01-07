@@ -85,17 +85,29 @@ while($data = $temp->fetch())
 		</div>
 		<br />
 <?php
+$break_flag = false;
+$url_game = "";
+
 for ($i=0; $i<count($games); $i++)
 {
 
+	if (isset($_GET["gpage"]))
+	{
+		$get_game = intval($_GET["gpage"]);
+		if (in_array($get_game, $games))
+		{
+			$i = $get_game-1;
+			$break_flag = true;
+			$url_game = "&amp;gpage=".$get_game;
+		}
+	}
+
 	echo '<p id="'.$games_short[$i].'"><table class="line_table"><tr><td><hr class="line" /></td><td><img src="./style/img/games/'.$games_short[$i].'.png" alt="'.$games_name[$i].'" /></td><td><hr class="line" /></td></tr></table></p><br />';
-	
-// TODO check for leader invitation to accept / decline
 
 	if ($games_in[$games[$i]])
 	{
 		echo '<p style="text-align:center;">Vous êtes inscrit à ce tournoi !</p>
-		<p style="text-align: center;" class="smallquote">Plus qu\'à hard train jusqu\'à début Février... [ <a href="index.php?page=games&amp;game='.$games[$i].'&amp;del=1">Se désinscrire du tournoi</a> ]</p><br />';
+		<p style="text-align: center;" class="smallquote">Plus qu\'à hard train jusqu\'à début Février... [ <a href="index.php?page=games'.$url_game.'&amp;game='.$games[$i].'&amp;del=1">Se désinscrire du tournoi</a> ]</p><br />';
 
 		$temp = $database->req('SELECT sgl_users.login, sgl_teams.type, sgl_teams.register, sgl_teams.user
 			FROM sgl_users, sgl_teams LEFT JOIN sgl_teams AS my_team ON sgl_teams.lead = my_team.lead AND sgl_teams.game = my_team.game
@@ -106,9 +118,7 @@ for ($i=0; $i<count($games); $i++)
 		$nplayer = 0;
 		$nreps = 0;
 
-// TODO check stand-by players
-
-		echo '<p style="text-align: center">';
+		echo '<div style="text-align: center">';
 
 		$lasttype = 1;
 		$lead = false;
@@ -120,6 +130,20 @@ for ($i=0; $i<count($games); $i++)
 				if ($_SESSION["sgl_id"] == $data["user"])
 				{
 					$lead = true;
+
+					if ($games_team[$i] > 1)
+					{
+						echo '<div class="form"><form action="index.php?page=games'.$url_game.'" method="post">
+						<table class="form_table">
+							<tr><td><h3>Nom d\'équipe :</h3></td><td><input name="team_name" type="text"><br /><div class="smallquote">Le nom de votre équipe, genre "Télécom Bretagne Gaming"</div></td></tr>
+							<tr><td><h3>TAG d\'équipe :</h3></td><td><input name="team_name" type="text"><br /><div class="smallquote">Votre tag en 3 ou 4 caractères, genre "TBG" ou "TBG2" (que des lettres et des chiffres par contre !)</div></td></tr>
+						</table><br /><br /><button type="submit" value="Submit">Mettre à jour</button>
+						</form></div><br /><br /><br />';
+					}
+					else
+					{
+						// TODO : display team name & tag
+					}
 				}
 			}
 
@@ -153,7 +177,7 @@ for ($i=0; $i<count($games); $i++)
 
 			if ($lead && ($_SESSION["sgl_id"] != $data["user"]))
 			{
-				$dlstr = '<span class="cardoption"><a href="index.php?page=games&amp;game='.$games[$i].'&remove='.$data["user"].'"><i class="fa fa-times" aria-hidden="true"></i></a></span>';
+				$dlstr = '<span class="cardoption"><a href="index.php?page=games'.$url_game.'&amp;game='.$games[$i].'&remove='.$data["user"].'"><i class="fa fa-times" aria-hidden="true"></i></a></span>';
 			}
 			else
 			{
@@ -201,11 +225,9 @@ for ($i=0; $i<count($games); $i++)
 			}
 		}
 
-		echo '</p>';
+		echo '</div>';
 
-// TODO confirm delete participation
-
-		//echo '<p style="text-align: center;"><a href="" class="button">Mettre à jour les changements</a></p>';
+// TODO : confirm delete participation
 	}
 	else
 	{
@@ -217,13 +239,18 @@ for ($i=0; $i<count($games); $i++)
 
 			while($data = $temp->fetch())
 			{
-				echo '<p style="text-align: center;"><a href="index.php?page=games&amp;game='.$games[$i].'&accept='.$data["id"].'" class="button">Accepter l\'invitation de '.htmlspecialchars($data["login"]).'</a></p><br />';
+				echo '<p style="text-align: center;"><a href="index.php?page=games'.$url_game.'&amp;game='.$games[$i].'&accept='.$data["id"].'" class="button">Accepter l\'invitation de '.htmlspecialchars($data["login"]).'</a></p><br />';
 			}
 		}
-		echo '<p style="text-align: center;"><a href="index.php?page=games&amp;game='.$games[$i].'" class="button">S\'inscrire au tournoi</a></p>';
+		echo '<p style="text-align: center;"><a href="index.php?page=games'.$url_game.'&amp;game='.$games[$i].'" class="button">S\'inscrire au tournoi</a></p>';
 	}
 	
 	echo '<br /><br /><br /><br />';
+
+	if ($break_flag)
+	{
+		break;
+	}
 
 }
 ?>

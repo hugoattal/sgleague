@@ -60,6 +60,7 @@ function createPlayerNode(parentNode, id, name, role="Joueur")
 	const hiddenInput = document.createElement('input');
 	const playerName = document.createElement('span');
 	const playerType = document.createElement('span');
+	const playerOption = document.createElement('span');
 
 	hiddenInput.setAttribute('type', 'hidden');
 	hiddenInput.setAttribute('value', id);
@@ -72,9 +73,15 @@ function createPlayerNode(parentNode, id, name, role="Joueur")
 	playerType.appendChild(document.createTextNode('(' + role + ')'));
 	playerType.classList.add('playertype');
 
+	playerOption.classList.add('cardoption')
+	playerOption.innerHTML = '<a href="index.php?page=games&amp;gpage='+parentNode.dataset.game+'"><i class="fa fa-times" aria-hidden="true"></i></a>'
+
+	// TODO : don't have ID so refreshing page...
+
 	playerCard.appendChild(playerName);
 	playerCard.appendChild(playerType);
 	playerCard.appendChild(hiddenInput);
+	playerCard.appendChild(playerOption);
 
 	d3.select(parentNode).style("opacity", "0.5");
 

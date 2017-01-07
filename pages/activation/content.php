@@ -11,12 +11,12 @@ if ((isset($_GET["key"])) AND (isset($_GET["noob"])))
 
 		$database = new Database();
 
-		$temp = $database->req('SELECT id, activation FROM sgl_users WHERE login="'.addslashes($_GET["noob"]).'"');
+		$temp = $database->req('SELECT id, activation, mail FROM sgl_users WHERE login="'.addslashes($_GET["noob"]).'"');
 		$data = $temp->fetch();
 
 		if ($data["activation"] == $_GET["key"])
 		{
-			$database->req('UPDATE sgl_users SET activation="" WHERE id="'.$data["id"].'"');
+			$database->req('UPDATE sgl_users SET activation="", activemail="'.addslashes($data["mail"]).'" WHERE id="'.$data["id"].'"');
 		}
 		else
 		{

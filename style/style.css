@@ -552,7 +552,7 @@ body
 
 .form_table tr td:first-of-type
 {
-	width: 100px;
+	width: 105px;
 }
 
 .form .g-recaptcha
@@ -789,4 +789,24 @@ input:focus, input:hover, textarea:focus, textarea:hover
 #footer a:hover:after
 {
 	width: 100%;
+}
+
+#footer .separator
+{
+	margin-bottom: 15px;
+}
+
+#footer .sepline
+{
+	display: inline-block;
+	border: none;
+	height: 1px;
+	width: 200px;
+	background: #ff6600;
+	margin: 3px 25px;
+}
+
+#footer a.smplink:after
+{
+	display: none;
 }

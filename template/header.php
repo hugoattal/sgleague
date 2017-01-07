@@ -3,6 +3,7 @@
 	<head>
 		<title>Student Gaming League</title>
 		<meta content="text/html;charset=utf-8" http-equiv="Content-Type">
+		<link rel="icon" type="image/png" href="./style/img/favicon.png" />
 		<link rel="stylesheet" media="screen,print" href="./style/style.css" />
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.6/d3.min.js" charset="utf-8"></script>
@@ -14,10 +15,10 @@
 			<div class="page">
 				<div class="left">
 					<div id="social">
-						<span class="media"><a href="https://www.facebook.com/pages/Student-Gaming-Network-SGN/1485021598479124"><i class="fa fa-facebook-square"></i></a></span>
-						<span class="media"><a href="https://twitter.com/Student_GN"><i class="fa fa-twitter-square"></i></a></span>
-						<span class="media"><a href="https://discord.gg/D7uxyrC"><img src="./style/img/icon/discord.png" alt="discord"></a></span>
-						<span class="media"><a href="https://steamcommunity.com/groups/sgnw"><i class="fa fa-steam-square"></i></a></li></span>
+						<span class="media"><a target="_blank" href="https://www.facebook.com/pages/Student-Gaming-Network-SGN/1485021598479124"><i class="fa fa-facebook-square"></i></a></span>
+						<span class="media"><a target="_blank" href="https://twitter.com/Student_GN"><i class="fa fa-twitter-square"></i></a></span>
+						<span class="media"><a target="_blank" href="https://discord.gg/D7uxyrC"><img src="./style/img/icon/discord.png" alt="discord"></a></span>
+						<span class="media"><a target="_blank" href="https://steamcommunity.com/groups/sgnw"><i class="fa fa-steam-square"></i></a></li></span>
 					</div>
 					<div id="meta">
 <?php
@@ -81,9 +82,9 @@ if (!isset($page_tab))
 				</div>
 				<div id="partners" class="right">
 					<i class="fa fa-chevron-left" aria-hidden="true"></i>
-					<img src="./style/img/partners/tf1.png" alt="tf1" />
-					<img src="./style/img/partners/twitch.png" alt="twitch" />
-					<img src="./style/img/partners/fnatic.png" alt="fnatic" />
+					<a target="_blank" href="http://www.groupe-tf1.fr/"><img src="./style/img/partners/tf1.png" alt="tf1" /></a>
+					<a target="_blank" href="https://www.twitch.tv/"><img src="./style/img/partners/twitch.png" alt="twitch" /></a>
+					<a target="_blank" href="http://www.fnatic.com/"><img src="./style/img/partners/fnatic.png" alt="fnatic" /></a>
 					<i class="fa fa-chevron-right" aria-hidden="true"></i>
 				</div>
 			</div>

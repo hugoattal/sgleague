@@ -26,16 +26,16 @@ else
 	<table id="games">
 		<tr>
 			<td style="background-image: url('./style/img/ban/ban_ow.png" ');">
-				<span class="name"><a href="index.php?page=games#ow"><i class="fa fa-angle-right" aria-hidden="true"></i> Overwatch</a></span>
+				<span class="name"><a href="index.php?page=games&gpage=1"><i class="fa fa-angle-right" aria-hidden="true"></i> Overwatch</a></span>
 			</td>
 			<td style="background-image: url('./style/img/ban/ban_lol.png"');">
-				<span class="name"><a href="index.php?page=games#lol"><i class="fa fa-angle-right" aria-hidden="true"></i> League of Legends</a></span>
+				<span class="name"><a href="index.php?page=games&gpage=2"><i class="fa fa-angle-right" aria-hidden="true"></i> League of Legends</a></span>
 			</td>
 			<td style="background-image: url('./style/img/ban/ban_csgo.png');">
-				<span class="name"><a href="index.php?page=games#csgo"><i class="fa fa-angle-right" aria-hidden="true"></i> Counter Strike</a></span>
+				<span class="name"><a href="index.php?page=games&gpage=3"><i class="fa fa-angle-right" aria-hidden="true"></i> Counter Strike</a></span>
 			</td>
 			<td style="background-image: url('./style/img/ban/ban_hs.png" ');">
-				<span class="name"><a href="index.php?page=games#hs"><i class="fa fa-angle-right" aria-hidden="true"></i> Hearthstone</a></span>
+				<span class="name"><a href="index.php?page=games&gpage=4"><i class="fa fa-angle-right" aria-hidden="true"></i> Hearthstone</a></span>
 			</td>
 		</tr>
 	</table>
