@@ -18,7 +18,7 @@ class Template
 
 		if (isset($need_connection) && (!isset($_SESSION["sgl_id"])))
 		{
-			$this->page = "home";
+			$this->page = "403";
 
 			unset($page_head);
 			unset($page_script);
