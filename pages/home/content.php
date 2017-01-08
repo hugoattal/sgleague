@@ -47,7 +47,7 @@ else
 	</div>
 	<div class="rightcol">
 		<h1><i class="fa fa-angle-right" aria-hidden="true"></i> Calendrier</h1><br />
-		Début de la compétition le 5 Mars<br /><br />
+		Début de la compétition le 6 Mars<br /><br />
 		<b style="display:inline-block;width: 80px">Lundi</b> <i class="fa fa-angle-right" aria-hidden="true"></i> League of Legends<br />
 		<b style="display:inline-block;width: 80px">Mardi</b> <i class="fa fa-angle-right" aria-hidden="true"></i> Hearthstone<br />
 		<b style="display:inline-block;width: 80px">Mercredi</b> <i class="fa fa-angle-right" aria-hidden="true"></i> Counter Strike<br />

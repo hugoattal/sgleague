@@ -120,6 +120,8 @@ if (isset($_SESSION["sgl_id"]))
 			$get_ptype = isset($_GET['ptype']) ? intval($_GET['ptype']) : '';
 			$get_ptype = ($get_ptype==3)?3:2;
 
+//  ----- [ Check rights ] --------------------------------------------------
+
 			if (filter_var($get_mail, FILTER_VALIDATE_EMAIL) == true)
 			{
 				$temp = $database->req('SELECT COUNT(*) as existuser FROM sgl_users WHERE mail="'.addslashes($get_mail).'"');
@@ -152,7 +154,7 @@ if (isset($_SESSION["sgl_id"]))
 							$subject = "Invitation à la Student Gaming League";
 							$content = $_SESSION["sgl_login"]." vous invite à rejoindre son équipe à la Student Gaming League !
 Pour vous inscrire, cliquez sur le lien suivant : <https://".SERVER_ADDR."/".SERVER_REP."/index.php?page=register&mail=".strtolower($get_mail).">\n
-Vous rejoindrez ainsi automatiquement son équipe.\n\nL'équipe de la Student Gaming League 2017";
+Vous devrez ensuite accepter son invitation sur le site pour rejoindre son équipe.\n\nL'équipe de la Student Gaming League 2017";
 
 							include_once("./class/Mail.class.php");
 							new Mail($get_mail, $subject, $content);
@@ -178,8 +180,6 @@ Vous rejoindrez ainsi automatiquement son équipe.\n\nL'équipe de la Student Ga
 			{
 				echo '{"error": "Mail not valid"}';
 			}
-
-//  ----- [ Check rights ] --------------------------------------------------
 
 		break;
 	}

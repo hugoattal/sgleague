@@ -36,10 +36,48 @@ $games_quote = array(
 	"Rush B my friend ! Don't stop, don't stop...",
 	"You face Jaraxxus,<br />eredar lord of the burning legion !");
 
+$games_content = array(
+	'<p style="text-align:center;">
+		<b><i class="fa fa-user-circle" aria-hidden="true" style="padding-right: 5px;"></i></b> 6 joueurs par équipe
+		<span style="padding: 0px 10px;">|</span>
+		<b><i class="fa fa-calendar" aria-hidden="true" style="padding-right: 5px;"></i></b> Les Jeudis (début le 9 Mars)
+		<span style="padding: 0px 10px;">|</span>
+		<b><i class="fa fa-trophy" aria-hidden="true" style="padding-right: 5px;"></i></b> 1200€ de cashprize
+		<span style="padding: 0px 10px;">|</span>
+		<b><i class="fa fa-line-chart" aria-hidden="true" style="padding-right: 5px;"></i></b> Nouveau tournoi<br /><br />
+		Phases finales diffusées sur <a href="http://overwatch.gamersorigin.com/">Gamers Origin</a></p><br />',
+
+	'<p style="text-align:center;">
+		<b><i class="fa fa-user-circle" aria-hidden="true" style="padding-right: 5px;"></i></b> 5 joueurs par équipe
+		<span style="padding: 0px 10px;">|</span>
+		<b><i class="fa fa-calendar" aria-hidden="true" style="padding-right: 5px;"></i></b> Les Lundi (début le 6 Mars)
+		<span style="padding: 0px 10px;">|</span>
+		<b><i class="fa fa-trophy" aria-hidden="true" style="padding-right: 5px;"></i></b> voyage à Berlin aux LCS + qualification aux UEM
+		<span style="padding: 0px 10px;">|</span>
+		<b><i class="fa fa-line-chart" aria-hidden="true" style="padding-right: 5px;"></i></b> 200 joueurs l\'année dernière</p><br />',
+
+	'<p style="text-align:center;">
+		<b><i class="fa fa-user-circle" aria-hidden="true" style="padding-right: 5px;"></i></b> 5 joueurs par équipe
+		<span style="padding: 0px 10px;">|</span>
+		<b><i class="fa fa-calendar" aria-hidden="true" style="padding-right: 5px;"></i></b> Les Mercredis (début le 8 Mars)
+		<span style="padding: 0px 10px;">|</span>
+		<b><i class="fa fa-trophy" aria-hidden="true" style="padding-right: 5px;"></i></b> 1000€ de cashprize
+		<span style="padding: 0px 10px;">|</span>
+		<b><i class="fa fa-line-chart" aria-hidden="true" style="padding-right: 5px;"></i></b> 120 joueurs l\'année dernière</p><br />',
+
+	'<p style="text-align:center;">
+		<b><i class="fa fa-user-circle" aria-hidden="true" style="padding-right: 5px;"></i></b> Tournoi solo
+		<span style="padding: 0px 10px;">|</span>
+		<b><i class="fa fa-calendar" aria-hidden="true" style="padding-right: 5px;"></i></b> Les Mardis (début le 7 Mars)
+		<span style="padding: 0px 10px;">|</span>
+		<b><i class="fa fa-trophy" aria-hidden="true" style="padding-right: 5px;"></i></b> 500€ de cashprize
+		<span style="padding: 0px 10px;">|</span>
+		<b><i class="fa fa-line-chart" aria-hidden="true" style="padding-right: 5px;"></i></b> 114 joueurs l\'année dernière</p><br />');
+
 $check_teamtag = 0;
 $error_teamtag = "";
 
-if (isset($_GET["game"]) AND $csrf_check)
+if (isset($_GET["game"]) AND $csrf_check AND isset($_SESSION["sgl_id"]))
 {
 	$form_game = intval($_GET["game"]);
 	if (in_array($form_game, $games))
@@ -100,11 +138,14 @@ if (isset($_GET["game"]) AND $csrf_check)
 // TODO automated generation
 $games_in = array (1 => false, 2 => false, 3 => false, 4 => false);
 
-$temp = $database->req('SELECT game FROM sgl_teams WHERE user="'.$_SESSION["sgl_id"].'" AND register > 0');
-
-while($data = $temp->fetch())
+if (isset($_SESSION["sgl_id"]))
 {
-	$games_in[$data["game"]] = true;
+	$temp = $database->req('SELECT game FROM sgl_teams WHERE user="'.$_SESSION["sgl_id"].'" AND register > 0');
+
+	while($data = $temp->fetch())
+	{
+		$games_in[$data["game"]] = true;
+	}
 }
 
 ?>
@@ -163,12 +204,15 @@ for ($i=0; $i<count($games); $i++)
 		$url_game = "&amp;gpage=".$get_game;
 	}
 
-	echo '<p id="'.$games_short[$i].'"><table class="line_table"><tr><td><hr class="line" /></td><td><img src="./style/img/games/'.$games_short[$i].'.png" alt="'.$games_name[$i].'" /></td><td><hr class="line" /></td></tr></table></p><br />';
+	echo '<p id="'.$games_short[$i].'"><table class="line_table"><tr><td><hr class="line" /></td><td><img src="./style/img/games/'.$games_short[$i].'.png" alt="'.$games_name[$i].'" /></td><td><hr class="line" /></td></tr></table></p>';
+
+	echo $games_content[$i];
 
 	if ($games_in[$games[$i]])
 	{
-		echo '<p style="text-align:center;">Vous êtes inscrit à ce tournoi !</p>
-		<p style="text-align: center;" class="smallquote">Plus qu\'à hard train jusqu\'à début Mars... [ <a href="index.php?page=games'.$url_game.'&amp;game='.$games[$i].'&amp;del=1">Se désinscrire du tournoi</a> ]</p><br />';
+		echo '
+		<p style="text-align:center; font-weight: bold">Yay ! <b>Vous êtes inscrit</b> à ce tournoi ! Un premier pas vers la victoire...</p>
+		<p style="text-align: center;" class="smallquote">Plus qu\'à hard train jusqu\'à début Mars. [ <a href="index.php?page=games'.$url_game.'&amp;game='.$games[$i].'&amp;del=1">Se désinscrire du tournoi</a> ]</p><br />';
 
 		$temp = $database->req('SELECT sgl_users.login, sgl_users.mail, sgl_teams.type, sgl_teams.register, sgl_teams.user, sgl_teams.name, sgl_teams.tag
 			FROM sgl_users, sgl_teams LEFT JOIN sgl_teams AS my_team ON sgl_teams.lead = my_team.lead AND sgl_teams.game = my_team.game
@@ -299,21 +343,29 @@ for ($i=0; $i<count($games); $i++)
 	}
 	else
 	{
-		if ($games_team[$i] > 1)
+		if (isset($_SESSION["id"]))
 		{
-			echo '<p style="text-align: center;" class="smallquote">Si vous souhaitez rejoindre une équipe, votre chef d\'équipe doit d\'abord vous inviter.</p><br /<br />';
-
-			$temp = $database->req('SELECT sgl_users.login, sgl_users.id FROM sgl_teams, sgl_users WHERE sgl_teams.user="'.$_SESSION["sgl_id"].'" AND sgl_teams.lead = sgl_users.id AND game="'.$games[$i].'" AND sgl_teams.register = 0');
-
-			while($data = $temp->fetch())
+			if ($games_team[$i] > 1)
 			{
-				echo '<p style="text-align: center;"><a href="index.php?page=games'.$url_game.'&amp;game='.$games[$i].'&accept='.$data["id"].'" class="button">Accepter l\'invitation de '.htmlspecialchars($data["login"]).'</a></p><br />';
+				echo '<p style="text-align: center;" class="smallquote">Si vous souhaitez rejoindre une équipe, votre chef d\'équipe doit d\'abord vous inviter.</p><br /<br />';
+
+				$temp = $database->req('SELECT sgl_users.login, sgl_users.id FROM sgl_teams, sgl_users WHERE sgl_teams.user="'.$_SESSION["sgl_id"].'" AND sgl_teams.lead = sgl_users.id AND game="'.$games[$i].'" AND sgl_teams.register = 0');
+
+				while($data = $temp->fetch())
+				{
+					echo '<p style="text-align: center;"><a href="index.php?page=games'.$url_game.'&amp;game='.$games[$i].'&accept='.$data["id"].'" class="button">Accepter l\'invitation de '.htmlspecialchars($data["login"]).'</a></p><br />';
+				}
 			}
+			echo '<p style="text-align: center;"><a href="index.php?page=games'.$url_game.'&amp;game='.$games[$i].'" class="button">S\'inscrire au tournoi</a></p>';
 		}
-		echo '<p style="text-align: center;"><a href="index.php?page=games'.$url_game.'&amp;game='.$games[$i].'" class="button">S\'inscrire au tournoi</a></p>';
+		else
+		{
+			echo '<p style="text-align: center;">Vous devez d\'abord vous inscrire sur le site pour pouvoir participer...<br /><br />
+			<a href="index.php?page=register" class="button">S\'inscrire à la SGL</a></p>';
+		}
 	}
 	
-	echo '<br /><br /><br /><br />';
+	echo '<br /><br /><br />';
 
 	if ($break_flag)
 	{
