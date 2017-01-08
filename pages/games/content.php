@@ -168,7 +168,7 @@ for ($i=0; $i<count($games); $i++)
 	if ($games_in[$games[$i]])
 	{
 		echo '<p style="text-align:center;">Vous êtes inscrit à ce tournoi !</p>
-		<p style="text-align: center;" class="smallquote">Plus qu\'à hard train jusqu\'à début Février... [ <a href="index.php?page=games'.$url_game.'&amp;game='.$games[$i].'&amp;del=1">Se désinscrire du tournoi</a> ]</p><br />';
+		<p style="text-align: center;" class="smallquote">Plus qu\'à hard train jusqu\'à début Mars... [ <a href="index.php?page=games'.$url_game.'&amp;game='.$games[$i].'&amp;del=1">Se désinscrire du tournoi</a> ]</p><br />';
 
 		$temp = $database->req('SELECT sgl_users.login, sgl_users.mail, sgl_teams.type, sgl_teams.register, sgl_teams.user, sgl_teams.name, sgl_teams.tag
 			FROM sgl_users, sgl_teams LEFT JOIN sgl_teams AS my_team ON sgl_teams.lead = my_team.lead AND sgl_teams.game = my_team.game

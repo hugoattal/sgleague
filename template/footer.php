@@ -10,6 +10,7 @@
 			<a class="smplink" target="_blank" href="http://www.fnatic.com/"><img src="./style/img/partners/sml_fnatic.png" alt="Fnatic" /></a>
 			<a class="smplink" target="_blank" href="https://www.meltdown.bar/"><img src="./style/img/partners/sml_md.png" alt="Meltdown" /></a>
 			<a class="smplink" target="_blank" href="http://gamersorigin.com/"><img src="./style/img/partners/sml_go.png" alt="Gamers Origin" /></a>
+			<a class="smplink" target="_blank" href="https://shadow.tech/"><img src="./style/img/partners/sml_shadow.png" alt="Shadow" /></a>
 			<br /><br />
 			<div class="separator">
 				<hr class="sepline" />
