@@ -99,7 +99,7 @@ else
 		<h1><i class="fa fa-angle-right" aria-hidden="true"></i> Connexion réussie</h1>
 		<div class="quote">
 			<span class="qcontent">
-				<i>&ldquo;</i><?=htmlspecialchars($data["login"])?> use password.<br />It's super effective!<i>&rdquo;</i>
+				<i>&ldquo;</i><?=htmlspecialchars($data["login"])?> used password.<br />It's super effective!<i>&rdquo;</i>
 			</span>
 			<span class="qauthor">
 				- Un joueur de la SGL 2016

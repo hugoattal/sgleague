@@ -47,6 +47,11 @@ else
 	</div>
 	<div class="rightcol">
 		<h1><i class="fa fa-angle-right" aria-hidden="true"></i> Calendrier</h1>
+		A partir du début de la compétition le 5 Mars :<br />
+		Lundi > League of Legends<br />
+		Mardi > Hearthstone<br />
+		Mercredi > Counter Strike<br />
+		Jeudi > Overwatch
 	</div>
 	<hr class="break" />
 </div>

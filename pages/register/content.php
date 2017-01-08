@@ -81,19 +81,19 @@ if (isset($_POST["sent"]))
 			if (!(preg_match('/[A-Za-z]/', $form_pass) && preg_match('/[0-9]/', $form_pass)))
 			{
 				$check_pass = -3;
-				$error_pass = "On a dit au moins une lettre et un chiffre ! Si vous m'écoutez même pas aussi...";
+				$error_pass = "On a dit au moins une lettre et un chiffre ! Si vous m'écoutez pas aussi :( ...";
 			}
 		}
 		else
 		{
 			$check_pass = -2;
-			$error_pass = "On a dit au moins 8 caractères ! Voici de quoi vous aider : 1, 2, 3, 4, 5, 6, 7, 8, 9, 10.<br />Me remerciez pas, c'est moi.";
+			$error_pass = "On a dit au moins 8 caractères ! C'est pour que la NSA puisse pas le décrypter è_é !";
 		}
 	}
 	else
 	{
 		$check_pass = -1;
-		$error_pass = "Vous voulez que je vous en génère un pour vous ? Flemme.";
+		$error_pass = "Non vraiment, c'est plus sécuritaire si vous en mettez un :/";
 	}
 
 	if ($check_pass < 0)
@@ -119,7 +119,7 @@ if (isset($_POST["sent"]))
 		else
 		{
 			$check_mail = -2;
-			$error_mail = "Comment on va vous spam si votre mail ne marche pas ?";
+			$error_mail = "Comment on va vous envoyer des petits mots doux si votre mail ne marche pas :'( ?";
 		}
 	}
 	else
@@ -138,7 +138,7 @@ if (isset($_POST["sent"]))
 	if (strlen($form_school) == 0)
 	{
 		$check_school = -1;
-		$error_school = "C'est pas parce que vous en avez honte que vous pouvez ne pas la mettre !";
+		$error_school = "Et si ! On est fier de son école et on l'affiche !";
 	}
 
 	if ($check_school < 0)
@@ -151,7 +151,7 @@ if (isset($_POST["sent"]))
 	if (!validCaptcha($form_captcha))
 	{
 		$check_captcha = -1;
-		$error_captcha = "Même pas fichu de cocher un truc ?";
+		$error_captcha = "Roh, c'est bon, il suffit juste de cliquer sur le truc...";
 	}
 
 	if ($check_captcha < 0)
@@ -213,7 +213,7 @@ Vous pourrez ensuite créer ou rejoindre une équipe pour vos jeux préférés.\
 				- Un joueur de la SGL 2016
 			</span>
 		</div>
-		<p>Et voilà, c'était pas si dur ! Plus qu'à aller cliquer sur le lien d'activation qu'on vient de vous envoyer (à cette adresse si vous avez déjà oublié ce que vous aviez mis : <?=htmlspecialchars($form_mail)?>).<br />PENSEZ A CHECKER VOS SPAMS !</p>
+		<p>Et voilà, la première étape vers la victoire et la domination mondiale ! Plus qu'à aller cliquer sur le lien d'activation qu'on vient de vous envoyer (à cette adresse si vous avez déjà oublié ce que vous aviez mis : <?=htmlspecialchars($form_mail)?>).<br /><br />PENSEZ A CHECKER VOS SPAMS !</p>
 		<br />
 	</div>
 </div>
