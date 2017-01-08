@@ -2,6 +2,8 @@
 
 session_start();
 
+include_once("./config.php");
+
 if (isset($_SESSION["sgl_id"]))
 {
 	$get_type = isset($_GET['type']) ? $_GET['type'] : '';
@@ -153,7 +155,7 @@ Pour vous inscrire, cliquez sur le lien suivant : <https://".SERVER_ADDR."/".SER
 Vous rejoindrez ainsi automatiquement son équipe.\n\nL'équipe de la Student Gaming League 2017";
 
 							include_once("./class/Mail.class.php");
-							new Mail($form_mail, $subject, $content);
+							new Mail($get_mail, $subject, $content);
 
 							echo '{"success": "Player added"}';
 						}

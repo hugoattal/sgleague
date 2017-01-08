@@ -46,12 +46,12 @@ else
 		<h1><i class="fa fa-angle-right" aria-hidden="true"></i> Derniers matchs</h1>
 	</div>
 	<div class="rightcol">
-		<h1><i class="fa fa-angle-right" aria-hidden="true"></i> Calendrier</h1>
-		A partir du début de la compétition le 5 Mars :<br />
-		Lundi > League of Legends<br />
-		Mardi > Hearthstone<br />
-		Mercredi > Counter Strike<br />
-		Jeudi > Overwatch
+		<h1><i class="fa fa-angle-right" aria-hidden="true"></i> Calendrier</h1><br />
+		Début de la compétition le 5 Mars<br /><br />
+		<b style="display:inline-block;width: 80px">Lundi</b> <i class="fa fa-angle-right" aria-hidden="true"></i> League of Legends<br />
+		<b style="display:inline-block;width: 80px">Mardi</b> <i class="fa fa-angle-right" aria-hidden="true"></i> Hearthstone<br />
+		<b style="display:inline-block;width: 80px">Mercredi</b> <i class="fa fa-angle-right" aria-hidden="true"></i> Counter Strike<br />
+		<b style="display:inline-block;width: 80px">Jeudi</b> <i class="fa fa-angle-right" aria-hidden="true"></i> Overwatch
 	</div>
 	<hr class="break" />
 </div>

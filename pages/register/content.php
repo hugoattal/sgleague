@@ -151,7 +151,7 @@ if (isset($_POST["sent"]))
 	if (!validCaptcha($form_captcha))
 	{
 		$check_captcha = -1;
-		$error_captcha = "Roh, c'est bon, il suffit juste de cliquer sur le truc...";
+		$error_captcha = "Roh, il suffit juste de cliquer sur la petite case...";
 	}
 
 	if ($check_captcha < 0)

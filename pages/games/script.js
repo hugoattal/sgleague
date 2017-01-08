@@ -140,7 +140,7 @@ function addPlayer(textInput, player, parentNode) {
 			setTimeout(() => {
 				parentNode.removeChild(GLOBALS.currentDropdownSuggestionNode);
 				GLOBALS.currentDropdownSuggestionNode = null;
-			}, 0);	
+			}, 0);
 		} else {
 			// TODO: show error.
 		}
@@ -200,8 +200,11 @@ function createOrChangeCurrentSuggestions(parentNode, textInput, currentContent,
 						sendMail(textInput.value, parentNode);
 						var playerType = {2:"Joueur", 3:"Remplaçant"};
 						createPlayerNode(parentNode, 0, textInput.value, playerType[parentNode.dataset.type]);
-						parentNode.removeChild(textInput);
-						parentNode.removeChild(container);
+
+						setTimeout(() => {
+							parentNode.removeChild(textInput);
+							GLOBALS.currentDropdownSuggestionNode = null;
+						}, 0);
 					})
 					.append("div")
 					.append("span")
@@ -262,7 +265,7 @@ function morphIntoTextField(element, game)
 			.classed("playercard", true)
 			.html("")
 			.append("input")
-			.attr("placeholder", "Joueur")
+			.attr("placeholder", "Nom du joueur ou mail d'invitation")
 			.attr("onblur", "cancelAndRemove(this)")
 			.node();
 
