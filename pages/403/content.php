@@ -1,9 +1,9 @@
 <div id="content">
 	<div class="container">
-		<h1><i class="fa fa-angle-right" aria-hidden="true"></i> Activation</h1>
+		<h1><i class="fa fa-angle-right" aria-hidden="true"></i> Erreur 403</h1>
 		<div class="quote">
 			<span class="qcontent">
-				<i>&ldquo;</i>Erreur 403<i>&rdquo;</i>
+				<i>&ldquo;</i>Mundo va où il veut<i>&rdquo;</i>
 			</span>
 			<span class="qauthor">
 				- Un joueur de la SGL 2016
