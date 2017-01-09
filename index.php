@@ -15,6 +15,11 @@ $time_start = microtime_float();
 
 include_once("./config.php");
 
+if ($_SERVER['HTTP_HOST'] != SERVER_ADDR)
+{
+	header('Location: http://'.SERVER_ADDR.SERVER_REP);
+}
+
 $csrf_check = false;
 
 if (isset($_SERVER['HTTP_REFERER']))

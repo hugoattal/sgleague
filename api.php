@@ -153,7 +153,7 @@ if (isset($_SESSION["sgl_id"]))
 
 							$subject = "Invitation à la Student Gaming League";
 							$content = $_SESSION["sgl_login"]." vous invite à rejoindre son équipe à la Student Gaming League !
-Pour vous inscrire, cliquez sur le lien suivant : <https://".SERVER_ADDR."/".SERVER_REP."/index.php?page=register&mail=".strtolower($get_mail).">\n
+Pour vous inscrire, cliquez sur le lien suivant : <https://".SERVER_ADDR.SERVER_REP."/index.php?page=register&mail=".strtolower($get_mail).">\n
 Vous devrez ensuite accepter son invitation sur le site pour rejoindre son équipe.\n\nL'équipe de la Student Gaming League 2017";
 
 							include_once("./class/Mail.class.php");

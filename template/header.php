@@ -17,7 +17,7 @@
 					<div id="social">
 						<span class="media"><a target="_blank" href="https://www.facebook.com/pages/Student-Gaming-Network-SGN/1485021598479124"><i class="fa fa-facebook-square"></i></a></span>
 						<span class="media"><a target="_blank" href="https://twitter.com/Student_GN"><i class="fa fa-twitter-square"></i></a></span>
-						<span class="media"><a target="_blank" href="https://discord.gg/D7uxyrC"><img src="./style/img/icon/discord.png" alt="discord"></a></span>
+						<span class="media"><a target="_blank" href="https://discord.gg/SGL17"><img src="./style/img/icon/discord.png" alt="discord"></a></span>
 						<span class="media"><a target="_blank" href="https://steamcommunity.com/groups/sgnw"><i class="fa fa-steam-square"></i></a></li></span>
 					</div>
 					<div id="meta">
@@ -59,7 +59,7 @@ $gpage = 0;
 
 if (!isset($page_tab))
 {
-	$page_tab = "acc";
+	$page_tab = "home";
 }
 else
 {
@@ -70,12 +70,12 @@ else
 }
 
 ?>
-						<a href="index.php" <?=$page_tab=="acc"?'class="selected"':''?>>Accueil</a>
+						<a href="index.php" <?=$page_tab=="home"?'class="selected"':''?>>Accueil</a>
 						<a href="index.php?page=games&gpage=1" <?=$gpage==1?'class="selected"':''?>>O<i>ver</i>W<i>atch</i></a>
 						<a href="index.php?page=games&gpage=2" <?=$gpage==2?'class="selected"':''?>>L<i>eague </i>O<i>f </i>L<i>egends</i></a>
 						<a href="index.php?page=games&gpage=3" <?=$gpage==3?'class="selected"':''?>>C<i>ounter </i>S<i>trike</i></a>
 						<a href="index.php?page=games&gpage=4" <?=$gpage==4?'class="selected"':''?>>H<i>earth</i>S<i>tone</i></a>
-						<a href="#" <?=$page_tab=="x"?'class="selected"':''?>>FAQ</a>
+						<a href="index.php?page=contact" <?=$page_tab=="contact"?'class="selected"':''?>>Contact</a>
 					</div>
 				</div>
 			</div>

@@ -71,7 +71,7 @@ body
 #meta
 {
 	display: inline-block;
-	margin-left: 30px;
+	margin-left: 10px;
 }
 
 #meta a
@@ -126,6 +126,11 @@ body
 {
 	font-size: 9px;
 	font-style: normal;
+}
+
+#menu a i.fa
+{
+	font-size: 14px;
 }
 
 #menu a:hover
@@ -778,6 +783,60 @@ input:focus, input:hover, textarea:focus, textarea:hover
 {
 	opacity: 0.5;
 	float: right;
+}
+
+.contact
+{
+	display: inline-block;
+	border: 1px solid #ffc68f;
+	text-align: left;
+	width: 500px;
+	box-sizing: border-box;
+	padding: 10px;
+	margin: 10px;
+	transition: all .2s ease-in-out;
+}
+
+.contact .cname
+{
+	display: inline-block;
+	font-weight: 300;
+	font-size: 20px;
+}
+
+.contact .cname i
+{
+	padding-right: 10px;
+}
+
+.contact .crank
+{
+	display: inline-block;
+	opacity: 0.5;
+	font-style: italic;
+	font-size: 11px;
+}
+
+.contact .cmail
+{
+	display: inline-block;
+	padding-top: 10px;
+}
+
+.contact span
+{
+	color: #ffc68f;
+	transition: all .2s ease-in-out;
+}
+
+.contact:hover
+{
+	background: #ffc68f;
+}
+
+.contact:hover span
+{
+	color: #0c0c0c;
 }
 
 .break

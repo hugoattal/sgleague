@@ -195,7 +195,7 @@ if ($register_flag)
 
 	$subject = "Confirmation d'inscription à la Student Gaming League";
 	$content = "Bienvenue à la Student Gaming League !\n\n
-Pour confirmer votre inscription, cliquez sur le lien suivant : <https://".SERVER_ADDR."/".SERVER_REP."/index.php?page=activation&mvp=".strtolower($form_login)."&key=".$activation.">\n
+Pour confirmer votre inscription, cliquez sur le lien suivant : <https://".SERVER_ADDR.SERVER_REP."/index.php?page=activation&mvp=".strtolower($form_login)."&key=".$activation.">\n
 Vous pourrez ensuite créer ou rejoindre une équipe pour vos jeux préférés.\n\nL'équipe de la Student Gaming League 2017";
 
 	include_once("./class/Mail.class.php");

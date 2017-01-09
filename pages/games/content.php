@@ -45,16 +45,17 @@ $games_content = array(
 		<b><i class="fa fa-trophy" aria-hidden="true" style="padding-right: 5px;"></i></b> 1200€ de cashprize
 		<span style="padding: 0px 10px;">|</span>
 		<b><i class="fa fa-line-chart" aria-hidden="true" style="padding-right: 5px;"></i></b> Nouveau tournoi<br /><br />
-		Phases finales diffusées sur <a href="http://overwatch.gamersorigin.com/">Gamers Origin</a></p><br />',
+		Phases finales diffusées sur<br /><a href="http://overwatch.gamersorigin.com/"><img src="./style/img/partners/sml_go.png" alt="Gamers Origin" /></a></p><br />',
 
 	'<p style="text-align:center;">
 		<b><i class="fa fa-user-circle" aria-hidden="true" style="padding-right: 5px;"></i></b> 5 joueurs par équipe
 		<span style="padding: 0px 10px;">|</span>
-		<b><i class="fa fa-calendar" aria-hidden="true" style="padding-right: 5px;"></i></b> Les Lundi (début le 6 Mars)
+		<b><i class="fa fa-calendar" aria-hidden="true" style="padding-right: 5px;"></i></b> Les Lundis (début le 6 Mars)
 		<span style="padding: 0px 10px;">|</span>
-		<b><i class="fa fa-trophy" aria-hidden="true" style="padding-right: 5px;"></i></b> voyage à Berlin aux LCS + qualification aux UEM
+		<b><i class="fa fa-trophy" aria-hidden="true" style="padding-right: 5px;"></i></b> Voyage à Berlin aux LCS (en attente de validation par Riot)
 		<span style="padding: 0px 10px;">|</span>
-		<b><i class="fa fa-line-chart" aria-hidden="true" style="padding-right: 5px;"></i></b> 200 joueurs l\'année dernière</p><br />',
+		<b><i class="fa fa-line-chart" aria-hidden="true" style="padding-right: 5px;"></i></b> 200 joueurs l\'année dernière<br /><br />
+		Equipe gagnante qualifiée aux University eSports Masters<br /><a href="http://www.uemasters.com/"><img src="./style/img/partners/uem.png" alt="Gamers Origin" /></a></p><br />',
 
 	'<p style="text-align:center;">
 		<b><i class="fa fa-user-circle" aria-hidden="true" style="padding-right: 5px;"></i></b> 5 joueurs par équipe
@@ -72,7 +73,8 @@ $games_content = array(
 		<span style="padding: 0px 10px;">|</span>
 		<b><i class="fa fa-trophy" aria-hidden="true" style="padding-right: 5px;"></i></b> 500€ de cashprize
 		<span style="padding: 0px 10px;">|</span>
-		<b><i class="fa fa-line-chart" aria-hidden="true" style="padding-right: 5px;"></i></b> 114 joueurs l\'année dernière</p><br />');
+		<b><i class="fa fa-line-chart" aria-hidden="true" style="padding-right: 5px;"></i></b> 114 joueurs l\'année dernière<br /><br />
+		Phases finales diffusées sur<br /><a href="http://hearthstone.gamersorigin.com/"><img src="./style/img/partners/sml_go.png" alt="Gamers Origin" /></a></p><br />');
 
 $check_teamtag = 0;
 $error_teamtag = "";
@@ -169,7 +171,7 @@ if (isset($_GET["gpage"]))
 
 ?>
 	<div class="container">
-		<h1><i class="fa fa-angle-right" aria-hidden="true"></i> Jeux</h1>
+		<h1><i class="fa fa-angle-right" aria-hidden="true"></i> Tournoi <?=$single?$games_name[$get_game-1]:''?></h1>
 		<div class="quote">
 			<span class="qcontent">
 				<i>&ldquo;</i>
@@ -343,7 +345,7 @@ for ($i=0; $i<count($games); $i++)
 	}
 	else
 	{
-		if (isset($_SESSION["id"]))
+		if (isset($_SESSION["sgl_id"]))
 		{
 			if ($games_team[$i] > 1)
 			{
@@ -365,13 +367,14 @@ for ($i=0; $i<count($games); $i++)
 		}
 	}
 	
-	echo '<br /><br /><br />';
+	echo '<br /><br />';
+
+	echo '<p style="text-align:center;"><b><i class="fa fa-question-circle" aria-hidden="true" style="padding-right: 5px;"></i></b> Des questions ? Besoin d\'aide ? A le recherche de joueurs ? Venez nous rejoindre sur <a target="_blank" href="https://discord.gg/SGL17">Discord</a> :D !</p>';
 
 	if ($break_flag)
 	{
 		break;
 	}
-
 }
 ?>
 		<br />
