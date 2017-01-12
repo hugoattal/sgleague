@@ -5,8 +5,16 @@
 		<meta content="text/html;charset=utf-8" http-equiv="Content-Type">
 		<link rel="icon" type="image/png" href="./style/img/favicon.png" />
 		<link rel="stylesheet" media="screen,print" href="./style/style.css" />
-		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.6/d3.min.js" charset="utf-8"></script>
+		<meta property="og:title" content="Student Gaming League" />
+		<meta property="og:url" content="https://league.sgnw.fr/" />
+		<meta property="og:type" content="website" />
+		<meta property="og:description" content="Prêt à rejoindre la première league esport étudiante ? Venez défendre les couleurs de votre école jusqu'au podium !" />
+		<meta property="og:image" content="http://league.sgnw.fr/style/img/social.png" />
+		<meta property="og:image:secure_url" content="https://league.sgnw.fr/style/img/social.png" />
+		<meta property="og:image:type" content="image/png" />
+
 		<?=isset($page_head)?$page_head:'';?>
 		<?=isset($page_script)?'<script src="./pages/'.CURRENT_PAGE.'/script.js" charset="utf-8"></script>':''?>
 	</head>
@@ -71,10 +79,10 @@ else
 
 ?>
 						<a href="index.php" <?=$page_tab=="home"?'class="selected"':''?>>Accueil</a>
-						<a href="index.php?page=games&gpage=1" <?=$gpage==1?'class="selected"':''?>>O<i>ver</i>W<i>atch</i></a>
-						<a href="index.php?page=games&gpage=2" <?=$gpage==2?'class="selected"':''?>>L<i>eague </i>O<i>f </i>L<i>egends</i></a>
-						<a href="index.php?page=games&gpage=3" <?=$gpage==3?'class="selected"':''?>>C<i>ounter </i>S<i>trike</i></a>
-						<a href="index.php?page=games&gpage=4" <?=$gpage==4?'class="selected"':''?>>H<i>earth</i>S<i>tone</i></a>
+						<a href="index.php?page=games&amp;gpage=1" <?=$gpage==1?'class="selected"':''?>>O<i>ver</i>W<i>atch</i></a>
+						<a href="index.php?page=games&amp;gpage=2" <?=$gpage==2?'class="selected"':''?>>L<i>eague of </i>L<i>egends</i></a>
+						<a href="index.php?page=games&amp;gpage=3" <?=$gpage==3?'class="selected"':''?>>C<i>ounter </i>S<i>trike</i></a>
+						<a href="index.php?page=games&amp;gpage=4" <?=$gpage==4?'class="selected"':''?>>H<i>earth</i>S<i>tone</i></a>
 						<a href="index.php?page=contact" <?=$page_tab=="contact"?'class="selected"':''?>>Contact</a>
 					</div>
 				</div>

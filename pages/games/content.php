@@ -369,7 +369,7 @@ for ($i=0; $i<count($games); $i++)
 	
 	echo '<br /><br />';
 
-	echo '<p style="text-align:center;"><b><i class="fa fa-question-circle" aria-hidden="true" style="padding-right: 5px;"></i></b> Des questions ? Besoin d\'aide ? A le recherche de joueurs ? Venez nous rejoindre sur <a target="_blank" href="https://discord.gg/SGL17">Discord</a> :D !</p>';
+	echo '<p style="text-align:center;"><b><i class="fa fa-question-circle" aria-hidden="true" style="padding-right: 5px;"></i></b> Des questions ? Besoin d\'aide ? A le recherche de joueurs ?<br />Venez nous rejoindre sur <a target="_blank" href="https://discord.gg/SGL17">Discord</a> :D !</p>';
 
 	if ($break_flag)
 	{

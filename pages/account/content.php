@@ -55,11 +55,16 @@ if (isset($_POST["sent"]))
 	$form_bmonth =	isset($_POST['bmonth']) ?	$_POST['bmonth'] : '';
 	$form_byear =	isset($_POST['byear']) ?	$_POST['byear'] : '';
 
+	$form_rankcs =	isset($_POST['rankcs']) ?	$_POST['rankcs'] : '';
+	$form_ranklol =	isset($_POST['ranklol']) ?	$_POST['ranklol'] : '';
+	$form_rankow =	isset($_POST['rankow']) ?	$_POST['rankow'] : '';
+
 	$form_gender = intval($form_gender);
 	$form_gender = in_array($form_gender, array(0,1,2,3))?$form_gender:0;
 
 	$database->req('UPDATE sgl_users SET school="'.addslashes($form_school).'", gender="'.$form_gender.'", first="'.addslashes($form_first).'", name="'.addslashes($form_name).'",
 		birth="'.mktime(0, 0, 0, intval($form_bmonth), intval($form_bday), intval($form_byear)).'",
+		rankcs = "'.intval($form_rankcs).'", ranklol = "'.intval($form_ranklol).'", rankow = "'.intval($form_rankow).'",
 		steamid="'.addslashes($form_steamid).'", battletag="'.addslashes($form_btag).'", summoner="'.addslashes($form_smnr).'" WHERE id='.$_SESSION["sgl_id"]);
 
 	$form_oldpass =	isset($_POST['oldpass']) ?	$_POST['oldpass'] : '';
@@ -68,7 +73,7 @@ if (isset($_POST["sent"]))
 	// TODO : change password
 }
 
-$temp = $database->req('SELECT login, mail, steamid, battletag, summoner, school, first, name, gender, birth FROM sgl_users WHERE id='.$_SESSION["sgl_id"]);
+$temp = $database->req('SELECT login, mail, steamid, battletag, summoner, school, first, name, gender, birth, rankcs, ranklol, rankow FROM sgl_users WHERE id='.$_SESSION["sgl_id"]);
 $data = $temp->fetch();
 
 $birth_day = intval(date('d', $data["birth"]));
@@ -104,7 +109,7 @@ $birth_year = intval(date('Y', $data["birth"]));
 					<div class="smallquote">On va dire au moins 8 caractères chiffres + lettres. 100% incraquable par la NSA.</div></td></tr>
 				</table>
 
-				<p><table class="line_table"><tr><td><hr class="line" /></td><td>Comptes de jeux</td><td><hr class="line" /></td></tr></table></p>
+				<p><table class="line_table"><tr><td><hr class="line" /></td><td>Comptes de jeux et rangs</td><td><hr class="line" /></td></tr></table></p>
 				<table class="form_table">
 					<tr><td><h3>Steam ID :</h3></td><td><input type="text" name="steamid" value="<?=htmlspecialchars($data["steamid"])?>" /><br />
 					<?=$error_steamid?>
@@ -114,8 +119,57 @@ $birth_year = intval(date('Y', $data["birth"]));
 					<div class="smallquote">Votre BattleTag pour Hearthstone et Overwatch. On oublie pas la partie après le "#" !</div></td></tr>
 					<tr><td><h3>Invocateur :</h3></td><td><input type="text" name="summoner" value="<?=htmlspecialchars($data["summoner"])?>" /><br />
 					<div class="smallquote">Votre nom d'invocateur pour League of Legends.</div></td></tr>
+					<tr><td colspan="2"><br /></td></tr>
+					<tr><td><h3>Rang CSGO :</h3></td><td>
+					<select name="rankcs">
+						<option value="0">Non classé</option>
+						<option <?=($data["rankcs"] == 1)?'selected="selected"':''?> value="1">Silver 1</option>
+						<option <?=($data["rankcs"] == 2)?'selected="selected"':''?> value="2">Silver 2</option>
+						<option <?=($data["rankcs"] == 3)?'selected="selected"':''?> value="3">Silver 3</option>
+						<option <?=($data["rankcs"] == 4)?'selected="selected"':''?> value="4">Silver 4</option>
+						<option <?=($data["rankcs"] == 5)?'selected="selected"':''?> value="5">Silver Elite</option>
+						<option <?=($data["rankcs"] == 6)?'selected="selected"':''?> value="6">Silver Elite Master</option>
+						<option <?=($data["rankcs"] == 7)?'selected="selected"':''?> value="7">Gold Nova 1</option>
+						<option <?=($data["rankcs"] == 8)?'selected="selected"':''?> value="8">Gold Nova 2</option>
+						<option <?=($data["rankcs"] == 9)?'selected="selected"':''?> value="9">Gold Nova 3</option>
+						<option <?=($data["rankcs"] == 10)?'selected="selected"':''?> value="10">Gold Nova Master</option>
+						<option <?=($data["rankcs"] == 11)?'selected="selected"':''?> value="11">Master Guardian 1</option>
+						<option <?=($data["rankcs"] == 12)?'selected="selected"':''?> value="12">Master Guardian 2</option>
+						<option <?=($data["rankcs"] == 13)?'selected="selected"':''?> value="13">Master Guardian Elite</option>
+						<option <?=($data["rankcs"] == 14)?'selected="selected"':''?> value="14">Distinguished Master Guardian</option>
+						<option <?=($data["rankcs"] == 15)?'selected="selected"':''?> value="15">Legendary Eagle</option>
+						<option <?=($data["rankcs"] == 16)?'selected="selected"':''?> value="16">Legendary Eagle Master</option>
+						<option <?=($data["rankcs"] == 17)?'selected="selected"':''?> value="17">Supreme Master First Class</option>
+						<option <?=($data["rankcs"] == 18)?'selected="selected"':''?> value="18">The Global Elite</option>
+					</select>
+					<br />
+					<div class="smallquote">Votre rang Counter Strike : Global Offensive</div></td></tr>
+					<tr><td><h3>Rang LOL :</h3></td><td>
+					<select name="ranklol">
+						<option value="0">Non classé</option>
+						<option <?=($data["ranklol"] == 1)?'selected="selected"':''?> value="1">Bronze</option>
+						<option <?=($data["ranklol"] == 2)?'selected="selected"':''?> value="2">Argent</option>
+						<option <?=($data["ranklol"] == 3)?'selected="selected"':''?> value="3">Or</option>
+						<option <?=($data["ranklol"] == 4)?'selected="selected"':''?> value="4">Platine</option>
+						<option <?=($data["ranklol"] == 5)?'selected="selected"':''?> value="5">Maitre</option>
+						<option <?=($data["ranklol"] == 6)?'selected="selected"':''?> value="6">Challenger</option>
+					</select>
+					<br />
+					<div class="smallquote">Votre rang League of Legends</div></td></tr>
+					<tr><td><h3>Rang OW :</h3></td><td>
+					<select name="rankow">
+						<option value="0">Non classé</option>
+						<option <?=($data["rankow"] == 1)?'selected="selected"':''?> value="1">1850 et moins</option>
+						<option <?=($data["rankow"] == 2)?'selected="selected"':''?> value="2">1851-2200</option>
+						<option <?=($data["rankow"] == 3)?'selected="selected"':''?> value="3">2201-2450</option>
+						<option <?=($data["rankow"] == 4)?'selected="selected"':''?> value="4">2451-2700</option>
+						<option <?=($data["rankow"] == 5)?'selected="selected"':''?> value="5">2701-3000</option>
+						<option <?=($data["rankow"] == 6)?'selected="selected"':''?> value="6">3001-3500</option>
+						<option <?=($data["rankow"] == 7)?'selected="selected"':''?> value="7">3501 et plus</option>
+					</select>
+					<br />
+					<div class="smallquote">Votre nombre de points Overwatch</div></td></tr>
 				</table>
-
 				<p><table class="line_table"><tr><td><hr class="line" /></td><td>Informations personnelles</td><td><hr class="line" /></td></tr></table></p>
 				<table class="form_table">
 					<tr><td><h3>Mail :</h3></td><td><input type="mail" name="mail" value="<?=htmlspecialchars($data["mail"])?>"/><br />

@@ -620,7 +620,8 @@ hr.line
 input, textarea, select
 {
 	padding: 8px 10px;
-	width: 500px;
+	width: 522px;
+	box-sizing: border-box;
 	background: #0c0c0c;
 	border: 1px solid #ffc68f;
 	color: #ff6600;
@@ -742,7 +743,7 @@ input:focus, input:hover, textarea:focus, textarea:hover
 
 .playercard input
 {
-	width: calc(100% - 22px);
+	width: 100%;
 	margin-top: 6px;
 }
 
