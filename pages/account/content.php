@@ -36,7 +36,7 @@ if (isset($_POST["sent"]))
 
 	if (strlen($form_btag) != 0)
 	{
-		if (!preg_match("/#[0-9]{4}$/", $form_btag))
+		if (!preg_match("/#[0-9]{4,5}$/", $form_btag))
 		{
 			$check_btag = -1;
 			$error_btag = "Attention, vous avez pas oubliez la partie après le '#' par hasard ?";
