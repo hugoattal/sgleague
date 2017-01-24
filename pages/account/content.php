@@ -10,6 +10,9 @@ $error_steamid = '';
 $check_btag = 0;
 $error_btag = '';
 
+$check_pass = 0;
+$error_pass = '';
+
 if (isset($_POST["sent"]))
 {
 	$form_steamid =	isset($_POST['steamid']) ?	$_POST['steamid'] : '';
@@ -70,7 +73,53 @@ if (isset($_POST["sent"]))
 	$form_oldpass =	isset($_POST['oldpass']) ?	$_POST['oldpass'] : '';
 	$form_newpass =	isset($_POST['newpass']) ?	$_POST['newpass'] : '';
 
-	// TODO : change password
+	$temp = $database->req('SELECT id, login, pass, salt, type FROM sgl_users WHERE id="'.$_SESSION["sgl_id"].'"');
+	$data = $temp->fetch();
+
+	$hash = sha1($data["salt"].$form_oldpass.CONFIG_SALT);
+
+	if ($hash == $data["pass"])
+	{
+		if (strlen($form_newpass) != 0)
+		{
+			if (strlen($form_newpass) >= 8)
+			{
+				if (!(preg_match('/[A-Za-z]/', $form_newpass) && preg_match('/[0-9]/', $form_newpass)))
+				{
+					$check_pass = -3;
+					$error_pass = "On a dit au moins une lettre et un chiffre ! Si vous m'écoutez pas aussi :( ...";
+				}
+				else
+				{
+					include_once("./generic/randomstr.php");
+					$salt = random_str(100);
+					$hash = sha1($salt.$form_newpass.CONFIG_SALT);
+
+					$database->req('UPDATE sgl_users SET salt="'.$salt.'", pass="'.$hash.'", resetpass="" WHERE id="'.$_SESSION["sgl_id"].'"');
+				}
+			}
+			else
+			{
+				$check_pass = -2;
+				$error_pass = "On a dit au moins 8 caractères ! C'est pour que la NSA puisse pas le décrypter è_é !";
+			}
+		}
+		else
+		{
+			$check_pass = -1;
+			$error_pass = "Non vraiment, c'est plus sécuritaire si vous en mettez un :/";
+		}
+	}
+	else
+	{
+		$check_pass = -4;
+		$error_pass = "Votre mot de passe actuel n'est pas bon !";
+	}
+
+	if ($check_pass < 0)
+	{
+		$error_pass = "<div class=\"error\"><i class=\"fa fa-exclamation-triangle\" aria-hidden=\"true\"></i>".$error_pass."</div>";
+	}
 }
 
 $temp = $database->req('SELECT login, mail, steamid, battletag, summoner, school, first, name, gender, birth, rankcs, ranklol, rankow FROM sgl_users WHERE id='.$_SESSION["sgl_id"]);
@@ -106,6 +155,7 @@ $birth_year = intval(date('Y', $data["birth"]));
 					<tr><td><h3>Ancien :</h3></td><td><input type="password" name="oldpass" /><br />
 					<div class="smallquote">Juste pour être sûr que c'est bien vous et pas votre copine qui essaie de vous empecher de venir jouer.</div></td></tr>
 					<tr><td><h3>Nouveau :</h3></td><td><input type="password" name="newpass" /><br />
+					<?=$error_pass?>
 					<div class="smallquote">On va dire au moins 8 caractères chiffres + lettres. 100% incraquable par la NSA.</div></td></tr>
 				</table>
 

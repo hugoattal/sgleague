@@ -29,6 +29,35 @@ else if (isset($_GET["recover"]))
 
 // TODO : mail + regénération de mot de passe
 
+	if (isset($_POST["sent"]))
+	{
+		$form_login = isset($_POST['login']) ? $_POST['login'] : '';
+
+		include_once("./class/Database.class.php");
+		$database = new Database();
+
+		include_once("./generic/randomstr.php");
+		$resetsalt = random_str(20);
+
+		$database->req('UPDATE sgl_users SET resetpass="'.$resetsalt.'" WHERE LOWER(login)=LOWER("'.addslashes($form_login).'") AND activation=""');
+
+		$temp = $database->req('SELECT mail FROM sgl_users WHERE LOWER(login)=LOWER("'.addslashes($form_login).'") AND activation=""');
+		$data = $temp->fetch();
+
+		if (isset($data["mail"]))
+		{
+			$subject = "Regénération de votre mot de passe";
+			$content = "Alors comme ça on a oublié son mot de passe ?\n\n
+Pas de soucis, il suffit de cliquer sur ce lien pour en recevoir un nouveau : <https://".SERVER_ADDR.SERVER_REP."/index.php?page=activation&hitc=".strtolower($form_login)."&key=".$resetsalt.">\n
+Si vous avez des problèmes de connexion, n'hésitez pas à passer sur discord ! <https://discord.gg/SGL17>\n\nL'équipe de la Student Gaming League 2017";
+
+			include_once("./class/Mail.class.php");
+			new Mail($data["mail"], $subject, $content);
+		}
+
+		$flag_recover = true;
+	}
+
 	?>
 <div id="content">
 	<div class="container">
@@ -41,14 +70,16 @@ else if (isset($_GET["recover"]))
 				- Un joueur de la SGL 2016
 			</span>
 		</div>
+		<?php if(isset($flag_recover)){?>
+		<br /><p style="text-align:center; font-weight: bold">C'est bon, <b>tout est réglé</b> ! On viens de vous envoyer un <b>mail</b> pour <b>regénérer un mot de passe</b>.</p><br />
+		<?php }else{ ?>
 		<p style="text-align: center;">La prochaine fois, faites comme mundo pour ne plus oublier votre mot de passe ! Quoique le dire à voix haute n'est peut être pas une super idée...</p>
+		<?php } ?>
 		<div class="form">
-			<form action="index.php?page=connect" method="post">
+			<form action="index.php?page=connect&recover=1" method="post">
 				<table class="form_table">
-					<tr><td><h3>Pseudo :</h3></td><td><input type="text" name="login" /><br />
-					<div class="smallquote">Pour regénérer un mot passe, il me faut votre pseudo.</div></td></tr>
-					<tr><td><h3>Mail :</h3></td><td><input type="password" name="pass" /><br />
-					<div class="smallquote">Et le mail associé à votre compte (pour recevoir le mot de passe).</div></td></tr>
+					<tr><td><h3>Login :</h3></td><td><input name="login" type="mail" /><br />
+					<div class="smallquote">Pour regénérer un mot passe, il me faut votre login.</div></td></tr>
 				</table>
 				<br /><br />
 				<input type="hidden" name="sent" value="sent">
