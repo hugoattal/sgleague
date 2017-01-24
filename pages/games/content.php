@@ -220,7 +220,7 @@ for ($i=0; $i<count($games); $i++)
 			FROM sgl_users, sgl_teams LEFT JOIN sgl_teams AS my_team ON sgl_teams.lead = my_team.lead AND sgl_teams.game = my_team.game
 			WHERE my_team.user="'.$_SESSION["sgl_id"].'" AND my_team.game="'.$games[$i].'" AND sgl_teams.user = sgl_users.id ORDER BY type ASC');
 
-		$type = array("Aucun", "Leader", "Joueur", "Remplaçant");
+		$type = array("Aucun", "Capitaine", "Joueur", "Remplaçant");
 
 		$nplayer = 0;
 		$nreps = 0;
