@@ -20,7 +20,7 @@ echo "Nombre de joueurs confirmés :\n".$data["nb_users"];
 
 echo "\n\n";
 
-echo "Pourcentage de joueurs confirmés : ".($mydata["nb_conf"]/$mydata["nb_subs"]*100)."%";
+echo "Pourcentage de joueurs confirmés : ".round(($mydata["nb_conf"]/$mydata["nb_subs"]*100),2)."%";
 
 echo "\n\n";
 
@@ -66,7 +66,7 @@ echo "Joueurs HearthStone :\n".$data["nb_teams"];
 
 echo "\n\n";
 
-echo "Pourcentage de complétion d'équipes : ".(($mydata["full_ow"]+$mydata["full_lol"]+$mydata["full_csgo"])/($mydata["tot_ow"]+$mydata["tot_lol"]+$mydata["tot_csgo"])*100)."%";
+echo "Pourcentage de complétion d'équipes : ".round((($mydata["full_ow"]+$mydata["full_lol"]+$mydata["full_csgo"])/($mydata["tot_ow"]+$mydata["tot_lol"]+$mydata["tot_csgo"])*100),2)."%";
 
 echo "</pre>";
 
