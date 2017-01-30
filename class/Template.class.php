@@ -23,6 +23,16 @@ class Template
 			unset($page_head);
 			unset($page_script);
 		}
+		else if (isset($min_access))
+		{
+			if ($_SESSION["sgl_type"] < $min_access)
+			{
+				$this->page = "403";
+
+				unset($page_head);
+				unset($page_script);
+			}
+		}
 
 		define("CURRENT_PAGE", $this->page);
 

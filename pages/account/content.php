@@ -13,11 +13,16 @@ $error_btag = '';
 $check_pass = 0;
 $error_pass = '';
 
+$check_discord = 0;
+$error_discord = '';
+
 if (isset($_POST["sent"]))
 {
 	$form_steamid =	isset($_POST['steamid']) ?	$_POST['steamid'] : '';
 	$form_btag =	isset($_POST['btag']) ?		$_POST['btag'] : '';
 	$form_smnr =	isset($_POST['summoner']) ?	$_POST['summoner'] : '';
+
+	$form_discord =	isset($_POST['discord']) ?	$_POST['discord'] : '';
 
 	if (strlen($form_steamid) != 0)
 	{
@@ -48,6 +53,21 @@ if (isset($_POST["sent"]))
 	{
 		$error_btag = "<div class=\"error\"><i class=\"fa fa-exclamation-triangle\" aria-hidden=\"true\"></i>".$error_btag."</div>";
 	}
+
+	if (strlen($form_discord) != 0)
+	{
+		if (!preg_match("/#[0-9]{4,5}$/", $form_discord))
+		{
+			$check_discord = -1;
+			$error_discord = "Attention, vous avez pas oubliez la partie après le '#' par hasard ?";
+			$form_discord = '';
+		}
+	}
+
+	if ($check_discord < 0)
+	{
+		$error_discord = "<div class=\"error\"><i class=\"fa fa-exclamation-triangle\" aria-hidden=\"true\"></i>".$error_discord."</div>";
+	}
 	
 	$form_mail =	isset($_POST['mail']) ?		$_POST['mail'] : '';
 	$form_school =	isset($_POST['school']) ?	$_POST['school'] : '';
@@ -66,7 +86,7 @@ if (isset($_POST["sent"]))
 	$form_gender = in_array($form_gender, array(0,1,2,3))?$form_gender:0;
 
 	$database->req('UPDATE sgl_users SET school="'.addslashes($form_school).'", gender="'.$form_gender.'", first="'.addslashes($form_first).'", name="'.addslashes($form_name).'",
-		birth="'.mktime(0, 0, 0, intval($form_bmonth), intval($form_bday), intval($form_byear)).'",
+		birth="'.mktime(0, 0, 0, intval($form_bmonth), intval($form_bday), intval($form_byear)).'", discord = "'.addslashes($form_discord).'",
 		rankcs = "'.intval($form_rankcs).'", ranklol = "'.intval($form_ranklol).'", rankow = "'.intval($form_rankow).'",
 		steamid="'.addslashes($form_steamid).'", battletag="'.addslashes($form_btag).'", summoner="'.addslashes($form_smnr).'" WHERE id='.$_SESSION["sgl_id"]);
 
@@ -122,7 +142,7 @@ if (isset($_POST["sent"]))
 	}
 }
 
-$temp = $database->req('SELECT login, mail, steamid, battletag, summoner, school, first, name, gender, birth, rankcs, ranklol, rankow FROM sgl_users WHERE id='.$_SESSION["sgl_id"]);
+$temp = $database->req('SELECT login, mail, steamid, battletag, summoner, school, first, name, gender, birth, discord, rankcs, ranklol, rankow FROM sgl_users WHERE id='.$_SESSION["sgl_id"]);
 $data = $temp->fetch();
 
 $birth_day = intval(date('d', $data["birth"]));
@@ -148,6 +168,9 @@ $birth_year = intval(date('Y', $data["birth"]));
 				<table class="form_table">
 					<tr><td><h3>Pseudo :</h3></td><td><input type="text" name="login" value="<?=htmlspecialchars($data["login"])?>" disabled="disabled" /><br />
 					<div class="smallquote">Non, c'est même pas la peine d'essayer de le changer.</div></td></tr>
+					<tr><td><h3>Discord :</h3></td><td><input type="text" name="discord" value="<?=htmlspecialchars($data["discord"])?>" /><br />
+					<?=$error_discord?>
+					<div class="smallquote">Votre pseudo discord. Indispensable si vous êtes chef d'équipe ! <a href="https://discord.gg/SGL17">Lien du discord de la SGL</a></div></td></tr>
 				</table>
 
 				<p><table class="line_table"><tr><td><hr class="line" /></td><td>Modification du mot de passe</td><td><hr class="line" /></td></tr></table></p>
