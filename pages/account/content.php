@@ -224,6 +224,7 @@ $birth_year = intval(date('Y', $data["birth"]));
 						<option <?=($data["ranklol"] == 2)?'selected="selected"':''?> value="2">Argent</option>
 						<option <?=($data["ranklol"] == 3)?'selected="selected"':''?> value="3">Or</option>
 						<option <?=($data["ranklol"] == 4)?'selected="selected"':''?> value="4">Platine</option>
+						<option <?=($data["ranklol"] == 7)?'selected="selected"':''?> value="7">Diamant</option>
 						<option <?=($data["ranklol"] == 5)?'selected="selected"':''?> value="5">Maitre</option>
 						<option <?=($data["ranklol"] == 6)?'selected="selected"':''?> value="6">Challenger</option>
 					</select>
