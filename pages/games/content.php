@@ -45,6 +45,7 @@ $games_content = array(
 		<b><i class="fa fa-trophy" aria-hidden="true" style="padding-right: 5px;"></i></b> 1200€ de cashprize
 		<span style="padding: 0px 10px;">|</span>
 		<b><i class="fa fa-line-chart" aria-hidden="true" style="padding-right: 5px;"></i></b> Nouveau tournoi<br /><br />
+		<a href="./files/rules_sgl2017.pdf"><i class="fa fa-file-pdf-o" aria-hidden="true"></i> Télécharger le règlement</a><br /><br />
 		Phases finales diffusées sur<br /><a href="http://overwatch.gamersorigin.com/"><img src="./style/img/partners/sml_go.png" alt="Gamers Origin" /></a></p><br />',
 
 	'<p style="text-align:center;">
@@ -55,6 +56,7 @@ $games_content = array(
 		<b><i class="fa fa-trophy" aria-hidden="true" style="padding-right: 5px;"></i></b> Voyage à Berlin aux LCS (en attente de validation par Riot)
 		<span style="padding: 0px 10px;">|</span>
 		<b><i class="fa fa-line-chart" aria-hidden="true" style="padding-right: 5px;"></i></b> 200 joueurs l\'année dernière<br /><br />
+		<a href="./files/rules_sgl2017.pdf"><i class="fa fa-file-pdf-o" aria-hidden="true"></i> Télécharger le règlement</a><br /><br />
 		Equipe gagnante qualifiée aux University eSports Masters<br /><a href="http://www.uemasters.com/"><img src="./style/img/partners/uem.png" alt="Gamers Origin" /></a></p><br />',
 
 	'<p style="text-align:center;">
@@ -64,7 +66,8 @@ $games_content = array(
 		<span style="padding: 0px 10px;">|</span>
 		<b><i class="fa fa-trophy" aria-hidden="true" style="padding-right: 5px;"></i></b> 1000€ de cashprize
 		<span style="padding: 0px 10px;">|</span>
-		<b><i class="fa fa-line-chart" aria-hidden="true" style="padding-right: 5px;"></i></b> 120 joueurs l\'année dernière</p><br />',
+		<b><i class="fa fa-line-chart" aria-hidden="true" style="padding-right: 5px;"></i></b> 120 joueurs l\'année dernière<br /><br />
+		<a href="./files/rules_sgl2017.pdf"><i class="fa fa-file-pdf-o" aria-hidden="true"></i> Télécharger le règlement</a></p><br />',
 
 	'<p style="text-align:center;">
 		<b><i class="fa fa-user-circle" aria-hidden="true" style="padding-right: 5px;"></i></b> Tournoi solo
@@ -74,6 +77,7 @@ $games_content = array(
 		<b><i class="fa fa-trophy" aria-hidden="true" style="padding-right: 5px;"></i></b> 500€ de cashprize
 		<span style="padding: 0px 10px;">|</span>
 		<b><i class="fa fa-line-chart" aria-hidden="true" style="padding-right: 5px;"></i></b> 114 joueurs l\'année dernière<br /><br />
+		<a href="./files/rules_sgl2017.pdf"><i class="fa fa-file-pdf-o" aria-hidden="true"></i> Télécharger le règlement</a><br /><br />
 		Phases finales diffusées sur<br /><a href="http://hearthstone.gamersorigin.com/"><img src="./style/img/partners/sml_go.png" alt="Gamers Origin" /></a></p><br />');
 
 $check_teamtag = 0;

@@ -77,10 +77,11 @@ if (isset($_GET["game"]))
 ')).'</td>
 			<td style="width:15%">'.htmlspecialchars($data_m["login"]).'</td>
 			<td style="width:160px;">'.htmlspecialchars($data_m["gameid"]).'</td>
-			<td style="width:60px;">'.($data_m["birth"]!=0?floor((time()-$data_m["birth"])/(60*60*24*365.25)).' ans':'').'</td>
+			<td style="width:60px;">'.($data_m["birth"]>0?floor((time()-$data_m["birth"])/(60*60*24*365.25)).' ans':'').'</td>
 			<td>'.htmlspecialchars($data_m["school"]).'</td>
 			<td style="width:160px;">'.htmlspecialchars($data_m["discord"]).'</td>
 			<td style="width:15px;text-align:center;"><a href="mailto:'.htmlspecialchars($data_m["activmail"]!=""?$data_m["activmail"]:$data_m["mail"]).'"><i class="fa fa-envelope" aria-hidden="true"></i></a></td>
+			<td style="width:15px;text-align:center;"><a href="javascript:void(0);" onclick="copyTextToClipboard(\''.htmlspecialchars($data_m["activmail"]!=""?$data_m["activmail"]:$data_m["mail"]).'\')"><i class="fa fa-clipboard" aria-hidden="true"></i></a></td>
 			</tr>';
 		}
 

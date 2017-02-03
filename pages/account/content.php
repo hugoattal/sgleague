@@ -16,6 +16,8 @@ $error_pass = '';
 $check_discord = 0;
 $error_discord = '';
 
+$newpass_bool = false;
+
 if (isset($_POST["sent"]))
 {
 	$form_steamid =	isset($_POST['steamid']) ?	$_POST['steamid'] : '';
@@ -92,6 +94,11 @@ if (isset($_POST["sent"]))
 
 	$form_oldpass =	isset($_POST['oldpass']) ?	$_POST['oldpass'] : '';
 	$form_newpass =	isset($_POST['newpass']) ?	$_POST['newpass'] : '';
+
+	if ($form_oldpass != '')
+	{
+		$newpass_bool = true;
+	}
 
 	$temp = $database->req('SELECT id, login, pass, salt, type FROM sgl_users WHERE id="'.$_SESSION["sgl_id"].'"');
 	$data = $temp->fetch();
@@ -178,7 +185,7 @@ $birth_year = intval(date('Y', $data["birth"]));
 					<tr><td><h3>Ancien :</h3></td><td><input type="password" name="oldpass" /><br />
 					<div class="smallquote">Juste pour être sûr que c'est bien vous et pas votre copine qui essaie de vous empecher de venir jouer.</div></td></tr>
 					<tr><td><h3>Nouveau :</h3></td><td><input type="password" name="newpass" /><br />
-					<?=$error_pass?>
+					<?=$newpass_bool?$error_pass:''?>
 					<div class="smallquote">On va dire au moins 8 caractères chiffres + lettres. 100% incraquable par la NSA.</div></td></tr>
 				</table>
 
@@ -224,8 +231,9 @@ $birth_year = intval(date('Y', $data["birth"]));
 						<option <?=($data["ranklol"] == 2)?'selected="selected"':''?> value="2">Argent</option>
 						<option <?=($data["ranklol"] == 3)?'selected="selected"':''?> value="3">Or</option>
 						<option <?=($data["ranklol"] == 4)?'selected="selected"':''?> value="4">Platine</option>
-						<option <?=($data["ranklol"] == 5)?'selected="selected"':''?> value="5">Maitre</option>
-						<option <?=($data["ranklol"] == 6)?'selected="selected"':''?> value="6">Challenger</option>
+						<option <?=($data["ranklol"] == 5)?'selected="selected"':''?> value="5">Diamant</option>
+						<option <?=($data["ranklol"] == 6)?'selected="selected"':''?> value="6">Maitre</option>
+						<option <?=($data["ranklol"] == 7)?'selected="selected"':''?> value="7">Challenger</option>
 					</select>
 					<br />
 					<div class="smallquote">Votre rang League of Legends</div></td></tr>
