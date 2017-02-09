@@ -19,6 +19,11 @@ body
 	position: relative;
 }
 
+textarea:focus, input:focus
+{
+	outline: none;
+}
+
 .page
 {
 	width: calc(100% - 40px);
