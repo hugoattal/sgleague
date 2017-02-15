@@ -30,8 +30,13 @@ if (isset($_GET["game"]))
 		$gameidType = "steamid";
 	}
 
-	$temp = $database->req('SELECT user, name, tag, nt.nb_teams FROM sgl_teams, (SELECT COUNT(user) AS nb_teams, lead FROM sgl_teams WHERE game = "'.$get_game.'" GROUP BY lead) AS nt
-		WHERE sgl_teams.user=sgl_teams.lead AND sgl_teams.lead=nt.lead AND game="'.$get_game.'" ORDER BY nb_teams DESC, case when (name is null OR name="") then 1 else 0 end, name');
+	if (isset($_GET["team"]))
+	{
+		$database->req('UPDATE sgl_teams SET valid='.intval($_GET["valid"]).' WHERE game='.$get_game.' AND user='.$_GET["team"]);
+	}
+
+	$temp = $database->req('SELECT user, name, tag, valid, nt.nb_teams FROM sgl_teams, (SELECT COUNT(user) AS nb_teams, lead FROM sgl_teams WHERE game = "'.$get_game.'" GROUP BY lead) AS nt
+		WHERE sgl_teams.user=sgl_teams.lead AND sgl_teams.lead=nt.lead AND game="'.$get_game.'" ORDER BY valid, nb_teams DESC, case when (name is null OR name="") then 1 else 0 end, name');
 	while($data = $temp->fetch())
 	{
 		echo '<div class="adm_team">';
@@ -39,6 +44,15 @@ if (isset($_GET["game"]))
 
 		if ($get_game != 4)
 		{
+			if ($data["valid"] == 0)
+			{
+				echo '<div style="float:right;"><a href="index.php?page=admin&amp;game='.$get_game.'&amp;team='.$data["user"].'&amp;valid=1"><i class="fa fa-square-o" aria-hidden="true"></i></a></div>';
+			}
+			else
+			{
+				echo '<div style="float:right;"><a href="index.php?page=admin&amp;game='.$get_game.'&amp;team='.$data["user"].'&amp;valid=0"><i class="fa fa-check-square-o" aria-hidden="true"></i></a></div>';
+			}
+
 			echo '<div class="title">';
 
 			if ($data["name"] != null)

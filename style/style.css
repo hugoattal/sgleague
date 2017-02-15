@@ -734,6 +734,13 @@ input:focus, input:hover, textarea:focus, textarea:hover
 	margin: 15px;
 }
 
+.playercard .mintext
+{
+	font-weight: normal;
+	font-size: 10px;
+	opacity: 0.5;
+}
+
 .playercard .playertype
 {
 	display: inline-block;

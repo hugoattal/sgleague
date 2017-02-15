@@ -220,7 +220,17 @@ for ($i=0; $i<count($games); $i++)
 		<p style="text-align:center; font-weight: bold">Yay ! <b>Vous êtes inscrit</b> à ce tournoi ! Un premier pas vers la victoire...</p>
 		<p style="text-align: center;" class="smallquote">Plus qu\'à hard train jusqu\'à début Mars. [ <a href="index.php?page=games'.$url_game.'&amp;game='.$games[$i].'&amp;del=1">Se désinscrire du tournoi</a> ]</p><br />';
 
-		$temp = $database->req('SELECT sgl_users.login, sgl_users.mail, sgl_teams.type, sgl_teams.register, sgl_teams.user, sgl_teams.name, sgl_teams.tag
+		$gameidType = "battletag";
+		if ($get_game == 2)
+		{
+			$gameidType = "summoner";
+		}
+		else if ($get_game == 3)
+		{
+			$gameidType = "steamid";
+		}
+
+		$temp = $database->req('SELECT sgl_users.login, sgl_users.mail, sgl_users.'.$gameidType.', sgl_teams.type, sgl_teams.register, sgl_teams.user, sgl_teams.name, sgl_teams.tag
 			FROM sgl_users, sgl_teams LEFT JOIN sgl_teams AS my_team ON sgl_teams.lead = my_team.lead AND sgl_teams.game = my_team.game
 			WHERE my_team.user="'.$_SESSION["sgl_id"].'" AND my_team.game="'.$games[$i].'" AND sgl_teams.user = sgl_users.id ORDER BY type ASC');
 
@@ -261,7 +271,7 @@ for ($i=0; $i<count($games); $i++)
 				}
 				else
 				{
-					// TODO : display team name & tag
+					echo "<h1>".htmlspecialchars($data["name"])." [".htmlspecialchars($data["tag"])."]</h1><br />";
 				}
 			}
 
@@ -304,11 +314,20 @@ for ($i=0; $i<count($games); $i++)
 
 			if ($data["register"] == 0)
 			{
-				echo '<span class="playercard" style="opacity:0.5;"><span class="playername">'.htmlspecialchars(($data["login"] == "")?$data["mail"]:$data["login"]).'</span><span class="playertype">('.$type[$data["type"]].')</span>'.$dlstr.'</span><br />';
+				echo '<span class="playercard" style="opacity:0.5;"><span class="playername">'.htmlspecialchars(($data["login"] == "")?$data["mail"]:$data["login"]).' <span class="mintext">(Invitation envoyée)</span></span><span class="playertype">('.$type[$data["type"]].')</span>'.$dlstr.'</span><br />';
 			}
 			else
 			{
-				echo '<span class="playercard"><span class="playername">'.htmlspecialchars($data["login"]).'</span><span class="playertype">('.$type[$data["type"]].')</span>'.$dlstr.'</span><br />';
+				if($data[$gameidType] != "")
+				{
+					$gameTag = ' <span class="mintext">('.$data[$gameidType].')</span>';
+				}
+				else
+				{
+					$gameTag = ' <span class="mintext">(Gametag manquant)</span>';
+				}
+
+				echo '<span class="playercard"><span class="playername">'.htmlspecialchars($data["login"]).$gameTag.'</span><span class="playertype">('.$type[$data["type"]].')</span>'.$dlstr.'</span><br />';
 			}
 
 			$lasttype = $data["type"];
